@@ -1,10 +1,15 @@
-package com.example.proyectotesting.patterns.behavioral.state;
+package com.example.proyectotesting.patterns_test.behavioral.state.state;
 
-public class ProcessingState implements OrderState {
+public class DeliveredState implements OrderState {
 
 	@Override
 	public void next(Order order) {
-		
+		System.out.println("Order delivered, ends!");
+
+	}
+
+	@Override
+	public void previous(Order order) {
 		System.out.println(
 				String.format("Updating Order %d from %s to %s.", 
 				order.getId(), 
@@ -13,14 +18,6 @@ public class ProcessingState implements OrderState {
 				));
 		
 		order.setState(new ShippedState());
-		
-
-	}
-
-	@Override
-	public void previous(Order order) {
-
-		System.out.println("Root state");
 	}
 
 }

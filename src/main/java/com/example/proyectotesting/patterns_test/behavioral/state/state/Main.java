@@ -1,4 +1,4 @@
-package com.example.proyectotesting.patterns.behavioral.state;
+package com.example.proyectotesting.patterns_test.behavioral.state.state;
 
 import java.time.LocalDateTime;
 

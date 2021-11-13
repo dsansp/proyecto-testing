@@ -1,9 +1,8 @@
-package com.example.proyectotesting.patterns.behavioral.state;
+package com.example.proyectotesting.patterns_test.behavioral.state.state;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ProcessingStateTest {

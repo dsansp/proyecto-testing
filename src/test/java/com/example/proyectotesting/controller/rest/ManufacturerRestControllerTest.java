@@ -113,18 +113,21 @@ class ManufacturerRestControllerTest {
                 {
                     "id": %d,
                     "name": "Manufacturer EDITADO",
-                    "cif": "2343235325G",
-                    "numEmployees": 550,
-                    "year": 1944
+                    "cif": "2344635325G",
+                   
                 }
                 """, manufacturer.getId());
+        System.out.println(json);
         ResponseEntity<Manufacturer> response =
                 testRestTemplate.exchange(MANUFACTURER_URL, HttpMethod.PUT, createHttpRequest(json), Manufacturer.class);
+
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.hasBody());
         assertNotNull(response.getBody());
+
         Manufacturer responseManufacturer = response.getBody();
+
         assertEquals(manufacturer.getId(), responseManufacturer.getId());
         assertEquals("Manufacturer EDITADO", responseManufacturer.getName());
         assertNotEquals(responseManufacturer.getName(), manufacturer.getName());
@@ -133,18 +136,17 @@ class ManufacturerRestControllerTest {
     void updateBadRequest() {
         String json = """
                 {
-                    "id": null,
+                    "id": &d,
                     "name": "Manufacturer EDITADO",
                    "cif": "2343235325G",
-                    "numEmployees": 550,
-                    "year": 1944
+                    "numEmployees": 6550,
+                    "year": 1644
                 }
                 """;
         ResponseEntity<Manufacturer> response =
                 testRestTemplate.exchange(MANUFACTURER_URL, HttpMethod.PUT, createHttpRequest(json), Manufacturer.class);
         assertEquals(400, response.getStatusCodeValue());
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertFalse(response.hasBody());
     }
 
     @Test
