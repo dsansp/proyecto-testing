@@ -26,8 +26,7 @@ import static org.mockito.Mockito.*;
 class ProductServiceImplTest {
     ProductService productService;
     ProductRepository productRepository;
-    ManufacturerService manufacturerService;
-    ManufacturerRepository manufacturerRepository;
+
 
     @BeforeEach
     void setUp() {
@@ -41,6 +40,10 @@ class ProductServiceImplTest {
                 new Product("Balón2", "basket", 3, 16.99, made));
 
     }
+    /*
+    * Verificamos que cuenta los productos de prueba que hemos cargado
+    * previamente
+    */
 @DisplayName("comprobamos que cuenta los productos")
     @Test
     void count() {
@@ -53,6 +56,10 @@ class ProductServiceImplTest {
 
     @Nested
     class findTest {
+        /*
+         * Comprobamos que encuentra todos los productos que hemos cargado
+         * previamente
+         */
         @DisplayName("comprobamos que es capaz de encontrar todos los registros")
         @Test
         void findAllTest() {
@@ -66,6 +73,9 @@ class ProductServiceImplTest {
             assertEquals(2, result.size());
             verify(productRepository).findAll();
         }
+        /*
+         * Comprobamos que no encuentra los productos con Id nula
+         */
         @DisplayName("comprobamos que no  encuentra con Id nula")
         @Test
         void findOneNullIdTest() {
@@ -73,6 +83,9 @@ class ProductServiceImplTest {
             assertEquals(Optional.empty(), product);
 
         }
+        /*
+         * Comprobamos que no encuentra los productos con Id negativa
+         */
         @DisplayName("comprobamos que no  encuentra con Id negativa")
         @Test
         void findNegativeIdTest() {
@@ -80,6 +93,9 @@ class ProductServiceImplTest {
             assertEquals(Optional.empty(), product);
 
         }
+        /*
+         * Comprobamos que no encuentra los productos con Id cero
+         */
         @DisplayName("comprobamos que no  encuentra con Id cero")
         @Test
         void findZeroIdTest() {
@@ -103,6 +119,9 @@ class ProductServiceImplTest {
             assertTrue(product.isEmpty());
 
         }
+        /*
+         * Comprobamos que  encuentra un producto existente
+         */
         @DisplayName("comprobamos que  encuentra una Id")
         @Test
         void existsByIdOkTest() {
@@ -116,6 +135,9 @@ class ProductServiceImplTest {
             assertTrue(product);
             System.out.println();
         }
+        /*
+         * Comprobamos que no encuentra un producto no existente
+         */
         @DisplayName("comprobamos que no encuentra una Id que no existe")
         @Test
         void NotexistsByIdTest() {
@@ -128,6 +150,9 @@ class ProductServiceImplTest {
             assertFalse(product);
 
         }
+        /*
+         * Comprobamos que no encuentra un producto con precios nulos
+         */
         @DisplayName("comprobamos que no encuentra precios nulos")
         @Test
         void findByPriceBetweenNullTest() {
@@ -149,8 +174,11 @@ class ProductServiceImplTest {
             System.out.println(prices);
             assertNull(prices);
 
-        }
 
+        }
+        /*
+         * Comprobamos que no encuentra un producto con precios negativos
+         */
         @DisplayName("comprobamos que no encuentra precios negativos")
         @Test
         void findByPricMinNegTest() {
@@ -173,6 +201,9 @@ class ProductServiceImplTest {
             assertTrue(prices.isEmpty());
 
         }
+        /*
+         * Comprobamos que no encuentra un producto con precio menor superior al maximo
+         */
         @DisplayName("comprobamos que no encuentra con precio menor mayor que el superior")
         @Test
         void findByPricMinMaxTest() {
@@ -197,7 +228,9 @@ class ProductServiceImplTest {
 
         }
 
-
+        /*
+         * Comprobamos que no encuentra un producto sin fabricante
+         */
         @DisplayName("comprobamos que no encuentra productos con manufacturer nulo")
         @Test
         void findByManufacturerEmptyTest() {
@@ -205,7 +238,9 @@ class ProductServiceImplTest {
             List<Product> manufacturer = productService.findByManufacturer(null);
             assertTrue(manufacturer.isEmpty());
         }
-
+        /*
+         * Comprobamos que no calcula los portes de  un producto nulo
+         */
 
         @DisplayName("comprobamos que no calcula los portes con producto nulo")
         @Test
@@ -216,6 +251,10 @@ class ProductServiceImplTest {
             Double shipping = productService.calculateShippingCost(null, direction1);
             assertEquals(0d, shipping);
         }
+        /*
+         * Comprobamos que calcula correctamente los portes de un producto en Spain
+         */
+
         @DisplayName("comprobamos que calcula los portes con producto en Spain")
         @Test
         void calculateShippingCostSpainTest() {
@@ -226,6 +265,9 @@ class ProductServiceImplTest {
             assertEquals(2.99d, shipping);
 
         }
+        /*
+         * Comprobamos que calcula correctamente los portes de un producto fuera de  Spain
+         */
         @DisplayName("comprobamos que calcula los portes con producto fuera de Spain")
         @Test
         void calculateShippingCostPOutSpainTest() {
@@ -239,7 +281,9 @@ class ProductServiceImplTest {
 
         }
     }
-
+    /*
+     * Comprobamos que no guarda un producto nulo
+     */
     @Nested
     class saveTest {
         @DisplayName("comprobamos que no guarda con un producto nulo")
@@ -253,6 +297,9 @@ class ProductServiceImplTest {
             Assert.assertNull(result);
 
         }
+        /*
+         * Comprobamos que guarda un producto correctamente
+         */
         @DisplayName("comprobamos que guarda bien  un producto")
         @Test
         void saveOkTest() {
@@ -266,7 +313,9 @@ class ProductServiceImplTest {
 
         }
     }
-
+    /*
+     * Comprobamos que no borra un producto con id nula
+     */
     @Nested
     class deleteTests {
         @DisplayName("comprobamos que no borra con una Id nula")
@@ -275,9 +324,10 @@ class ProductServiceImplTest {
             productService.deleteById(null);
             boolean result = productService.deleteById(null);
             assertFalse(result);
-
-
         }
+        /*
+         * Comprobamos que borra un producto con id
+         */
         @DisplayName("comprobamos que  borra con una Id")
         @Test
         void deleteByIdOkTest() {
@@ -287,9 +337,10 @@ class ProductServiceImplTest {
 
             assertEquals(0, borrado.size());
 
-
         }
-
+        /*
+         * Comprobamos que no borra un producto con id que no existe
+         */
         @DisplayName("comprobamos que no borra con una Id que no debe existir")
         @Test
         void deleteByIdOutOfBoundsTest() {
@@ -298,7 +349,10 @@ class ProductServiceImplTest {
             assertFalse(result);
 
         }
-        @DisplayName("comprobamos que devuelve una excepción al intentar  borrar todos los productos")
+        /*
+         * comprobamos que devuelve una excepción al intentar  borrar un productos que produce una excepción
+         */
+        @DisplayName("comprobamos que devuelve una excepción al intentar  borrar un productos que produce una excepción")
         @Test
         void deleteIdExceptTest() {
             doThrow(RuntimeException.class).when(productRepository).deleteById(any());
@@ -309,7 +363,9 @@ class ProductServiceImplTest {
             assertFalse(result);
 
         }
-
+        /*
+         * comprobamos que borrar todos los productos
+         */
         @DisplayName("comprobamos que  borra todos los productos")
         @Test
         void deleteAllOk() {
@@ -321,6 +377,9 @@ class ProductServiceImplTest {
             verify(productRepository, times(2)).deleteAll();
 
         }
+        /*
+         * comprobamos que devuelve una excepción al intentar  borrar todos los  productos
+         */
         @DisplayName("comprobamos que devuelve una excepción al intentar  borrar todos los productos")
         @Test
         void deleteAllExceptTest() {
