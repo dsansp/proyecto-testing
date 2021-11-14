@@ -169,7 +169,7 @@ class ManufacturerRestControllerTest {
         @Test
         @Disabled
         void deleteByIdSuccess() {
-            Manufacturer manufacturer = createDemoManufacturer();
+            Manufacturer manufacturer =createDemoManufacturer();
             String archive = MANUFACTURER_URL + "/" + manufacturer.getId();
             ResponseEntity<Manufacturer> response = testRestTemplate.getForEntity(archive, Manufacturer.class);
 

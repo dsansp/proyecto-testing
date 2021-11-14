@@ -66,11 +66,6 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public boolean existsById(Long id) {
-        return false;
-    }
-
-    @Override
     public List<Manufacturer> findManufacturerByCountry(String country) {
         List<Manufacturer> result = new ArrayList<>();
         if(country == null || country.isEmpty())
