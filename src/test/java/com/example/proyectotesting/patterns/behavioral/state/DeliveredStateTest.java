@@ -1,6 +1,7 @@
 package com.example.proyectotesting.patterns.behavioral.state;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.System.*;
@@ -22,6 +23,7 @@ class DeliveredStateTest {
     }
 
     @Test
+    @DisplayName("Se cierra el pedido al completarse")
     void next() {
         deliveredState.next(order);
 
@@ -31,6 +33,7 @@ class DeliveredStateTest {
     }
 
     @Test
+    @DisplayName("Pasa a estado de en envío")
     void previous() {
         deliveredState.previous(order);
 
