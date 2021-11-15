@@ -19,7 +19,7 @@
 			<div class = "col-md-8 mb-5">
 					<p><b>Nombre</b>: ${product.name}</p>
 					<p><b>Descripción</b>: ${product.description}</p>
-					<p><b>Precio</b>: ${product.price}</p>
+					<p><b>Precio</b>: ${product.price} (€)</p>
 					<p><b>Cantidad</b>: ${product.quantity}</p>
 					<p><b>Fabricante</b>: <a href="${pageContext.request.contextPath}/manufacturers/${product.manufacturer.id}/view">${product.manufacturer.name}</a></p>
 					
