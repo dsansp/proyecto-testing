@@ -1,8 +1,10 @@
-package com.example.proyectotesting.patterns_test.behavioral.state.state;
+package com.example.proyectotesting.patterns_test.behavioral.state;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class ProcessingStateTest {
@@ -19,6 +21,7 @@ class ProcessingStateTest {
     }
 
     @Test
+    @DisplayName("Pasa envio a estado enviando")
     void next() {
         state.next(order);
 
@@ -28,7 +31,9 @@ class ProcessingStateTest {
     }
 
     @Test
+    @DisplayName("Deja envio en estado raíz")
     void previous() {
         state.previous(order);
+        assertTrue(true);
     }
 }

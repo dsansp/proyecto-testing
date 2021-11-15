@@ -1,4 +1,4 @@
-package com.example.proyectotesting.patterns_test.behavioral.state.state;
+package com.example.proyectotesting.patterns_test.behavioral.state;
 
 public class ShippedState implements OrderState {
 

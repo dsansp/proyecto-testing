@@ -16,6 +16,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	
 	List<Product> findAllByManufacturerIdIsNull();
 
+	List<Product> findAllByManufacturerIdNotIn(List<Long> ids);
+
 	List<Product> findByManufacturerName(String name);
 
 	List<Product> findByPriceBetween(Double min, Double max);

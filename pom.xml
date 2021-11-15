@@ -52,11 +52,19 @@
 	</properties>
 	<dependencies>
 		<!-- JSP -->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tomcat.embed</groupId>-->
+<!--			<artifactId>tomcat-embed-jasper</artifactId>-->
+<!--			<version>9.0.54</version>-->
+<!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>provided</scope>
+			<version>9.0.54</version>
 		</dependency>
+
+
 		<!-- jstl for jsp -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
