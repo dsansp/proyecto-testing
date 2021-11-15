@@ -1,4 +1,4 @@
-package com.example.proyectotesting.patterns_test.behavioral.state.state;
+package com.example.proyectotesting.patterns.behavioral.state;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

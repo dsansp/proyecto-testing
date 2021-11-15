@@ -21,6 +21,9 @@ public class ManufacturerServiceImpl implements ManufacturerService {
         this.productRepository = productRepository;
     }
 
+    public ManufacturerServiceImpl(ManufacturerRepository manufacturerRepository) {
+    }
+
 
     @Override
     public List<Manufacturer> findAll() {

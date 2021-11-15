@@ -27,10 +27,6 @@ class ManufacturerServiceImplTest {
        manufacturerRepository = mock(ManufacturerRepository.class);
        this.manufacturerService = new ManufacturerServiceImpl(manufacturerRepository);
 
-       // List<Manufacturer> manufacturers = Arrays.asList(
-                //new Manufacturer("name1","cif1", 5,2021),
-               // new Manufacturer("name2", "cif2", 3, 2019));
-
     }
 
     @Test
