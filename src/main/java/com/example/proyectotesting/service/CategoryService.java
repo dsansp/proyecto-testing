@@ -7,6 +7,7 @@ import java.util.Optional;
 
 /**
  * Interface con las operaciones de la entidad Category
+ * @author Ioan Stirbu
  */
 public interface CategoryService {
 
