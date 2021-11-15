@@ -1,10 +1,9 @@
-package com.example.proyectotesting.patterns.behavioral.state;
+package com.example.proyectotesting.patterns_test.behavioral.state;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static java.lang.System.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

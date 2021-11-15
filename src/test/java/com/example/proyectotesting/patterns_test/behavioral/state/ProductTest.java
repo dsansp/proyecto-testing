@@ -1,4 +1,4 @@
-package com.example.proyectotesting.patterns.behavioral.state;
+package com.example.proyectotesting.patterns_test.behavioral.state;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
