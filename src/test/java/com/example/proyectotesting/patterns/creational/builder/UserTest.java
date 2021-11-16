@@ -103,7 +103,7 @@ class UserTest {
             //User.Builder usuario2 = new User.Builder();
             new User.Builder().setFirstName("Alan");
             String firstName = new User.Builder().getFirstName();
-            assertEquals(null, firstName);
+                    assertEquals(null, firstName);
         }
 
         @Test
@@ -128,6 +128,5 @@ class UserTest {
             assertFalse(married);
         }
     }
-
 
 }
