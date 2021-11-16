@@ -1,21 +1,23 @@
 package com.example.proyectotesting.patterns.creational.prototype;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ShapeTest {
+@Disabled
+ class ShapeTest extends Shape {
     String color;
-/*
+
     protected ShapeTest(String color) {
         super(color);
     }
 
-    public Shape copy(){
+     public Shape copy(){
         Shape shape = null;
         return (shape);
-    }
+     }
 
     @BeforeEach
     void setUp() {
@@ -29,8 +31,6 @@ class ShapeTest {
         assertEquals("rojo", colorReturn);
     }
 
-
-
     @Test
     void setColorTest() {
     }
@@ -38,7 +38,4 @@ class ShapeTest {
     @Test
     void copyTest() {
     }
-
- */
-
 }
