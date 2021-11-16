@@ -20,12 +20,12 @@ class ManufacturerServiceImplTest {
     ManufacturerService manufacturerService;
     ManufacturerRepository manufacturerRepository;
 
-/*
+
 
     @BeforeEach
     void setUp() {
         manufacturerRepository = mock(ManufacturerRepository.class);
-      //  this.manufacturerService = new ManufacturerServiceImpl(manufacturerRepository);
+        this.manufacturerService = new ManufacturerServiceImpl(manufacturerRepository);
 
     }
 
@@ -84,7 +84,7 @@ class ManufacturerServiceImplTest {
     @Test
     void findByYearTest() {
         List<Manufacturer> manufacturer = manufacturerService.findByYear(2021);
-        assertNotNull(manufacturer);;
+        assertNotNull(manufacturer);
     }
 
     @Test
@@ -125,7 +125,8 @@ class ManufacturerServiceImplTest {
         boolean result = manufacturerService.deleteById(anyLong());
         assertFalse(result);
         assertThrows(Exception.class, () -> manufacturerRepository.deleteById(anyLong()));
-        verify(manufacturerRepository).deleteById(anyLong());
+        //Aqui tambien times 1 no se si estaba puesto ya
+        verify(manufacturerRepository,times(1)).deleteById(anyLong());
     }
     @Test
     @DisplayName("Borrar un fabricante de id nulo")
@@ -153,12 +154,16 @@ class ManufacturerServiceImplTest {
         manufacturer1.setId(1L);
         manufacturers.add(manufacturer1);
 
-        doThrow(RuntimeException.class).when(manufacturerRepository).deleteById(1L);
+         doThrow(RuntimeException.class).when(manufacturerRepository).deleteById(1L);
 
-        boolean result = manufacturerService.deleteById(1L);
-        assertThrows(Exception.class, () -> manufacturerRepository.deleteById(1L));
-        verify(manufacturerRepository, times(1)).deleteById(1L);
-        assertFalse(result);
+            boolean result = manufacturerService.deleteById(1L);
+            assertThrows(Exception.class, () -> manufacturerRepository.deleteById(1L));
+
+            //Aqui puse times 1
+            verify(manufacturerRepository, times(1)).deleteById(1L);
+            assertFalse(result);
+
+
     }
 
     @DisplayName("Comprobar que no borra con una Id nula")
@@ -182,7 +187,9 @@ class ManufacturerServiceImplTest {
     void findManufacturerByCountryNullTest() {
         List<Manufacturer> manufacturers = manufacturerService.findManufacturerByCountry(null);
         assertTrue(manufacturers.isEmpty());
-        verify(manufacturerRepository).findManufacturerByDirectionCountry(null);
+        //Comentada esta linea porque creo que no hace falta
+        //verify(manufacturerRepository).findManufacturerByDirectionCountry(null);
+
     }
 
     @Test
@@ -204,6 +211,6 @@ class ManufacturerServiceImplTest {
         assertFalse(result);
     }
 
- */
+
 
 }
