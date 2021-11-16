@@ -9,7 +9,7 @@ class CalculatorTest {
     @Test
     void getCalculator() {
         Calculator calculator = null;
-       assertNotNull(calculator.getCalculator());
+        assertNotNull(calculator.getCalculator());
     }
 
     @Test
@@ -20,4 +20,5 @@ class CalculatorTest {
         int result= calculator.sum(num1, num2);
         assertEquals (7,  result);
     }
+
 }

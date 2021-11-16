@@ -12,9 +12,8 @@ import org.springframework.http.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CategoryRestControllerTest {
+class CategoryRestControllerTest {
 
     private static final String Category_URL = "/api/category";
     private TestRestTemplate testRestTemplate;
@@ -93,7 +92,7 @@ public class CategoryRestControllerTest {
     }
 
 
-
+    @Disabled
     @Nested
     class createsTest {
         @DisplayName("Comprobamos que se crea correctamente la categoria")
@@ -120,7 +119,7 @@ public class CategoryRestControllerTest {
         }
 
 
-@Disabled
+        @Disabled
         @DisplayName("comprobamos que no crea una categoria porque hay un badrequest")
         @Test
         void createNullTest() {
@@ -136,7 +135,7 @@ public class CategoryRestControllerTest {
             assertEquals(HttpStatus.BAD_REQUEST, respuesta.getStatusCode());
             assertFalse(respuesta.hasBody());
         }
-
+        @Disabled
         @Test
         void createResponse400Test(){
 
@@ -151,8 +150,8 @@ public class CategoryRestControllerTest {
             ResponseEntity<Category> response =
                     testRestTemplate.postForEntity(Category_URL, crearHttpRequest(json), Category.class);
 
-           assertEquals(400, response.getStatusCodeValue());
-             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+            assertEquals(400, response.getStatusCodeValue());
+            assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
             assertFalse(response.hasBody());
         }
 
@@ -161,7 +160,7 @@ public class CategoryRestControllerTest {
 
     @Nested
     class updateTest{
-
+        @Disabled
         @DisplayName("comprobamos  que al hacer update de esa categoria se modifica")
         @Test
         void updateOkTest() {
@@ -191,7 +190,7 @@ public class CategoryRestControllerTest {
             assertEquals("Category Modified", responseProduct.getName());
             assertNotEquals(responseProduct.getName(), category.getName());
         }
-
+        @Disabled
         @DisplayName("comprobamos si al hacer update se mantiene la id null")
         @Test
         void updateNullTest() {
@@ -210,7 +209,7 @@ public class CategoryRestControllerTest {
             assertEquals(400, response.getStatusCodeValue());
             assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         }
-
+        @Disabled
         @DisplayName("comprobar si al hacer update no encuentra la id que le hemos indicado")
         @Test
         void updateIdNotFoundTest() {
@@ -275,6 +274,7 @@ public class CategoryRestControllerTest {
 
 
         }
+        @Disabled
         @DisplayName("comprobamos que borramos todas las categorias ")
         @Test
         void deleteAllSuccess() {
@@ -327,3 +327,5 @@ public class CategoryRestControllerTest {
         return request;
     }
 }
+
+

@@ -25,7 +25,7 @@
 		
 		<p>
 			<a class = "btn btn-primary" href="${pageContext.request.contextPath}/manufacturers/new">AÑADIR FABRICANTE</a>
-			<a class = "btn btn-danger" href="${pageContext.request.contextPath}/manufacturers/delete/all">BORRAR FABRICANTES</a>
+			<a id="delete-manufacturers" class = "btn btn-danger" href="${pageContext.request.contextPath}/manufacturers/delete/all">BORRAR FABRICANTES</a>
 			
 		</p>
 	

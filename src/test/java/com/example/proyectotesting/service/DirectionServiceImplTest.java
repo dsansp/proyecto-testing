@@ -1,16 +1,11 @@
 package com.example.proyectotesting.service;
 
 import com.example.proyectotesting.entities.Direction;
-import com.example.proyectotesting.entities.Manufacturer;
-import com.example.proyectotesting.entities.Product;
 import com.example.proyectotesting.repository.DirectionRepository;
-import com.example.proyectotesting.repository.ProductRepository;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class DirectionServiceImplTest {
@@ -194,12 +190,12 @@ class DirectionServiceImplTest {
         @DisplayName("Comprobar la excepción al borrar todas las direcciones")
         @Test
         void deleteAllExceptionTest() {
-                doThrow(RuntimeException.class).when(directionRepository).deleteAll();
+            doThrow(RuntimeException.class).when(directionRepository).deleteAll();
 
-                boolean result = directionService.deleteAll();
-                assertThrows(Exception.class, () -> directionRepository.deleteAll());
-                verify(directionRepository, times(2)).deleteAll();
-                assertFalse(result);
+            boolean result = directionService.deleteAll();
+            assertThrows(Exception.class, () -> directionRepository.deleteAll());
+            verify(directionRepository, times(2)).deleteAll();
+            assertFalse(result);
 
         }
     }
@@ -230,4 +226,5 @@ class DirectionServiceImplTest {
 
         assertNotNull(result);
     }
+
 }

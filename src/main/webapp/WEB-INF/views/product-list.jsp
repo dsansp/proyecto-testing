@@ -23,7 +23,7 @@
 			
 		</p>
 	
-		<table class = "table table-striped table-bordered">
+		<table id ="products-list" class = "table table-striped table-bordered">
 			
 			<tr class = "thead-dark">
 				<th>Name</th>
