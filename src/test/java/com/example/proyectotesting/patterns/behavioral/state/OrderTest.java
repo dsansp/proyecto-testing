@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -37,6 +39,32 @@ class OrderTest {
 
         order.previousState();
         verify(order.getState()).previous(order);
+    }
+    @Test
+    void setId() {
+        order.setId(2L);
+        assertEquals(2L,order.getId());
+    }
+
+    @Test
+    void setDate() {
+        LocalDateTime time = LocalDateTime.now();
+        order.setDate(time);
+        assertEquals(time,order.getDate());
+    }
+
+    @Test
+    void setProducts() {
+        List<Product> products = new ArrayList<>();
+        order.setProducts(products);
+        assertEquals(products,order.getProducts());
+    }
+
+    @Test
+    void setShippedState() {
+        OrderState state = new ShippedState();
+        order.setState(state);
+        assertEquals(state, order.getState());
     }
 
 }

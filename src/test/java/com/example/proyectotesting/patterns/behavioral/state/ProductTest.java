@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductTest {
 
     @Test
-    @DisplayName("Comprpbar creación de producto")
+    @DisplayName("Comprobar creación de producto")
     void ProductTest() {
 
         new Product();
