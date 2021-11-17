@@ -1,5 +1,7 @@
 package com.example.proyectotesting.patterns.behavioral.iterator;
 
+import com.example.proyectotesting.patterns.behavioral.iterator.Book;
+import com.example.proyectotesting.patterns.behavioral.iterator.BookShop;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
