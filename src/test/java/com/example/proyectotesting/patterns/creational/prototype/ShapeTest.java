@@ -4,41 +4,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 class ShapeTest {
-    String color;
-/*
-    protected ShapeTest(String color) {
-        super(color);
-    }
-
-    public Shape copy(){
-        Shape shape = null;
-        return (shape);
-    }
-
+    private String color;
     @BeforeEach
     void setUp() {
     }
 
     @Test
-    void getColorTest() {
-        String colorReturn;
-        ShapeTest shapeTest = new ShapeTest("rojo");
-        colorReturn = shapeTest.getColor();
-        assertEquals("rojo", colorReturn);
-    }
+    void getColor() {
+        Circle newCircle = new Circle("red",1 );
+        String color = newCircle.getColor();
 
-
-
-    @Test
-    void setColorTest() {
+        assertEquals("red", color);
     }
 
     @Test
-    void copyTest() {
+    void setColor() {
+        Circle newCircle = new Circle("red",1 );
+        newCircle.setColor("verde");
+        String color = newCircle.getColor();
+        assertEquals("verde", color);
     }
-
- */
 
 }

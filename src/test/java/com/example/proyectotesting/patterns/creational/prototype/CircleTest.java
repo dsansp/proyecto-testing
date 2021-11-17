@@ -1,35 +1,26 @@
 package com.example.proyectotesting.patterns.creational.prototype;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-/*
+import static org.mockito.Mockito.mock;
+
 class CircleTest {
-    int radius;
-    String color;
-    protected CircleTest(String color, int radius) {
-        super (color, radius);
-    }
 
     @BeforeEach
     void setUp() {
-        color = "red";
-        radius = 5;
+
     }
 
-    @Disabled
     @Test
-    void copyOKTest() {
-        Circle circle = new CircleTest(color,radius);
-        Shape newCircle = circle.copy();
+    void copy() {
+        int radius = 1;
+        Circle newCircle = new Circle("red",radius );
 
-        assertNotNull(newCircle);
+        assertEquals(1,newCircle.radius);
+        assertEquals("red", newCircle.getColor());
+
+        Shape forma = newCircle.copy();
     }
-
-
-
 }
-
- */

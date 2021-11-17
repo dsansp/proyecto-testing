@@ -1,6 +1,8 @@
 package com.example.proyectotesting.service;
 
 import com.example.proyectotesting.entities.Category;
+import com.example.proyectotesting.entities.Manufacturer;
+import com.example.proyectotesting.entities.Product;
 import com.example.proyectotesting.repository.CategoryRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
