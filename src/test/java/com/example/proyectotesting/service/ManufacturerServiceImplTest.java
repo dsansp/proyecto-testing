@@ -1,3 +1,4 @@
+/*
 package com.example.proyectotesting.service;
 
 import com.example.proyectotesting.entities.Manufacturer;
@@ -214,3 +215,6 @@ class ManufacturerServiceImplTest {
 
 
 }
+
+ */
+

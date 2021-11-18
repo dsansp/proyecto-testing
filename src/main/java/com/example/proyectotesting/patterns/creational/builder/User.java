@@ -70,11 +70,11 @@ public class User {
 		private String email;
 		private Boolean married;
 
-		com.example.proyectotesting.patterns.creational.builder.User build() {
+		User build() {
 			// En caso de necesitar obligar a rellenar ciertas propiedades
 //			if(this.id == null || this.email == null)
 //				throws FieldsMandatory();
-			return new com.example.proyectotesting.patterns.creational.builder.User(this.id, this.firstName, this.lastName, this.email, this.married);
+			return new User(this.id, this.firstName, this.lastName, this.email, this.married);
 		}
 
 		public Long getId() {

@@ -11,6 +11,8 @@ public interface ManufacturerService {
 
     Optional<Manufacturer> findOne(Long id);
 
+    boolean existsById(Long id);
+
     List<Manufacturer> findByYear(Integer year);
 
     Manufacturer save(Manufacturer manufacturer);

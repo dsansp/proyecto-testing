@@ -1,6 +1,7 @@
 package com.example.proyectotesting.controller.rest;
 
 import com.example.proyectotesting.entities.Direction;
+import com.example.proyectotesting.entities.Product;
 import com.example.proyectotesting.service.DirectionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

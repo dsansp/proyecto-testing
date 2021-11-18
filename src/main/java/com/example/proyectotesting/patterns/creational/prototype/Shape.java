@@ -24,6 +24,6 @@ public abstract class Shape {
 	}
 	
 	// metodo para clonar
-	public abstract com.example.proyectotesting.patterns.creational.prototype.Shape copy();
+	public abstract Shape copy();
 	
 }

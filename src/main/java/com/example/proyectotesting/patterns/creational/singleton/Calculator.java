@@ -2,16 +2,16 @@ package com.example.proyectotesting.patterns.creational.singleton;
 
 public class Calculator {
 
-	private static com.example.proyectotesting.patterns.creational.singleton.Calculator calculadora;
+	private static Calculator calculadora;
 	
 	public Calculator() {
 		
 	}
 	
-	public static com.example.proyectotesting.patterns.creational.singleton.Calculator getCalculator(){
+	public static Calculator getCalculator(){
 
 		if(calculadora == null)
-			calculadora = new com.example.proyectotesting.patterns.creational.singleton.Calculator();
+			calculadora = new Calculator();
 		
 		return calculadora;
 	}

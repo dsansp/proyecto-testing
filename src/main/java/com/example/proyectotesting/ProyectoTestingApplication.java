@@ -74,5 +74,4 @@ public class ProyectoTestingApplication implements CommandLineRunner {
 		Product product5 = new Product("Zapatillas", "Lorem impsum dolor", 12, 99.99, null);
 		productRepository.save(product5);
 	}
-
 }

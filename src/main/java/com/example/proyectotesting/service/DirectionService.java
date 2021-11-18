@@ -1,9 +1,10 @@
 package com.example.proyectotesting.service;
 
-import com.example.proyectotesting.entities.Direction;
+        import com.example.proyectotesting.entities.Direction;
+        import com.example.proyectotesting.entities.Direction;
 
-import java.util.List;
-import java.util.Optional;
+        import java.util.List;
+        import java.util.Optional;
 
 public interface DirectionService {
 

@@ -4,7 +4,9 @@ import com.example.proyectotesting.entities.Category;
 import com.example.proyectotesting.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 

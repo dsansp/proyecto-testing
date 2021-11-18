@@ -1,6 +1,7 @@
 package com.example.proyectotesting.controller.rest;
 
 import com.example.proyectotesting.entities.Category;
+import com.example.proyectotesting.entities.Product;
 import com.example.proyectotesting.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

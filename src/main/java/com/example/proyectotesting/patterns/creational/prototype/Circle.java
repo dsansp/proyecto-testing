@@ -12,7 +12,7 @@ public class Circle extends Shape{
 
 	@Override
 	public Shape copy() {
-		return new com.example.proyectotesting.patterns.creational.prototype.Circle(this.getColor(), this.radius);
+		return new Circle(this.getColor(), this.radius);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.example.proyectotesting.repository;
 
+import com.example.proyectotesting.entities.Manufacturer;
 import com.example.proyectotesting.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	List<Product> findAllByManufacturerIdOrManufacturerIdIsNull(Long id);
 	
 	List<Product> findAllByManufacturerIdIsNull();
+
+	List<Product> findAllByManufacturerIdNotIn(List<Long> ids);
 
 	List<Product> findByManufacturerName(String name);
 
