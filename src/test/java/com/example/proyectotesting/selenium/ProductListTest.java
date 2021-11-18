@@ -2,6 +2,7 @@ package com.example.proyectotesting.selenium;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,7 +13,7 @@ public class ProductListTest extends BaseTest{
 
 
     private static final String URL = "http://localhost:8082/products";
-
+    @Disabled
     @Test
     void cargarPaginaTest(){
         webdriver.get(URL);
