@@ -12,7 +12,7 @@ import org.openqa.selenium.opera.OperaDriver;
 public class ProductListTest extends BaseTest{
 
 
-    private static final String URL = "http://localhost:8082/products";
+    private static final String URL = "https://proyectogrupo1testing.herokuapp.com/products";
     @Disabled
     @Test
     void cargarPaginaTest(){
