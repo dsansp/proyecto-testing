@@ -1,7 +1,12 @@
 package com.example.proyectotesting.controller.rest;
 
 import com.example.proyectotesting.entities.Category;
+import com.example.proyectotesting.repository.CategoryRepository;
+import com.example.proyectotesting.service.CategoryService;
 import org.junit.jupiter.api.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -10,6 +15,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 
 import java.util.List;
+
+import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,11 +32,20 @@ class CategoryRestControllerTest {
     @LocalServerPort
     private int port;
 
+    @Mock//dependencia
+    private CategoryService categoryService;
+
+    @InjectMocks//dependiente del Mock
+    private CategoryRestController categoryRestController;
+
     @BeforeEach
     @Test
     void setUp() {
         restTemplateBuilder = restTemplateBuilder.rootUri("http://localhost:" + port);
         testRestTemplate = new TestRestTemplate(restTemplateBuilder);
+
+        MockitoAnnotations.openMocks(this);
+        this.categoryRestController = new CategoryRestController(categoryService);
     }
 
     /**
@@ -141,24 +157,6 @@ class CategoryRestControllerTest {
 
     }
 
-    //Este test no haria falta ya que hace cobertura
-
-//        @Disabled
-//        @DisplayName("comprobamos que no crea una categoria porque hay un badrequest")
-//        @Test
-//        void createNullTest() {
-//            String json = """
-//                    {   "id": null,
-//                        "name": "Categoria BadRequest",
-//                        "color": "Color maravilloso"
-//                    }
-//                    """;
-//            ResponseEntity<Category> respuesta = testRestTemplate.postForEntity(Category_URL, crearHttpRequest(json), Category.class);
-//
-//            assertEquals(409, respuesta.getStatusCodeValue());
-//            assertEquals(HttpStatus.CONFLICT, respuesta.getStatusCode());
-//            assertFalse(respuesta.hasBody());
-//        }
 
     /**
      * Método que comprueba  que no se puede crear la categoria
@@ -175,7 +173,7 @@ class CategoryRestControllerTest {
                     "color": "color example"
                 }
                 """;
-// Id no debia ser nula
+
         ResponseEntity<Category> response =
                 testRestTemplate.postForEntity(Category_URL, createHttpRequest(json), Category.class);
 
@@ -257,7 +255,7 @@ class CategoryRestControllerTest {
 
         @DisplayName("comprobar si al hacer update no encuentra la id que le hemos indicado")
         @Test
-        void updateIdNotFoundTest() {
+        void updateDontFoundIdTest() {
             Category product = createDataCategories();
             String json = String.format("""
                     {
@@ -331,34 +329,109 @@ class CategoryRestControllerTest {
 
         }
 
+        @Test
+        void noCoudntDeleteIdTest(){
+            ResponseEntity<Category> response = deleteIdmockTest();
+
+            assertEquals(409, response.getStatusCodeValue());
+
+            assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+
+
+        }
+
+        private ResponseEntity<Category> deleteIdmockTest() {
+            CategoryRepository categoryRepository = mock(CategoryRepository.class);
+
+            doReturn(true).when(categoryService).existsById(null);
+            doReturn(false).when(categoryService).deleteById(null);
+
+            doThrow(RuntimeException.class).when(categoryRepository).deleteById(null);
+
+            return categoryRestController.delete(null);
+
+        }
+
+
+
+
+
         /**
          * Método que comprueba que se puede eliminar todas las categorias
          *
          */
 
-        @DisplayName("comprobamos que borramos todas las categorias ")
-@Disabled
+//        @DisplayName("comprobamos que borramos todas las categorias ")
+//@Disabled
+//        @Test
+//        void deleteAllSuccess() {
+//            createDataCategories();
+//            createDataCategories();
+//
+//            ResponseEntity<Category[]> response = testRestTemplate.getForEntity(Category_URL, Category[].class);
+//
+//            assertNotNull(response.getBody());
+//
+//            List<Category> categories = List.of(response.getBody());
+//
+//            assertTrue(categories.size() >= 2);
+//
+//            testRestTemplate.delete(Category_URL);
+//            response = testRestTemplate.getForEntity(Category_URL, Category[].class);
+//
+//            assertNotNull(response.getBody());
+//
+//            //categories = List.of(response.getBody());
+//      //      assertEquals(0, categories.size());
+//        }
+
+        /**
+         * Método que lanzará una excepcion 409 en el metodo de deleteAll()
+         * devuelve como respuesta un CONFLICT que es el numero 409
+         */
         @Test
-        void deleteAllSuccess() {
-            createDataCategories();
-            createDataCategories();
+        void noCoudntDeleteAllTest(){
+            ResponseEntity<Category> response = deleteAllmockTest();
+            assertEquals(409, response.getStatusCodeValue());
+            assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
 
-            ResponseEntity<Category[]> response = testRestTemplate.getForEntity(Category_URL, Category[].class);
 
-            assertNotNull(response.getBody());
-
-            List<Category> categories = List.of(response.getBody());
-
-            assertTrue(categories.size() >= 2);
-
-            testRestTemplate.delete(Category_URL);
-            response = testRestTemplate.getForEntity(Category_URL, Category[].class);
-
-            assertNotNull(response.getBody());
-
-            categories = List.of(response.getBody());
-      //      assertEquals(0, categories.size());
         }
+
+        private ResponseEntity<Category> deleteAllmockTest() {
+            CategoryRepository categoryRepository = mock(CategoryRepository.class);
+
+            doReturn(false).when(categoryService).deleteAll();
+            doThrow(RuntimeException.class).when(categoryRepository).deleteById(null);
+
+            return categoryRestController.deleteAll();
+
+        }
+
+
+        //En proceso de arreglar
+//        @Test
+//        void deleteAllNoContentTest(){
+////            ResponseEntity<Category[]> response = testRestTemplate.getForEntity(Category_URL, Category[].class);
+////            assertEquals(204, response.getStatusCodeValue());
+////            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+//
+//            Category category = createDataCategories();
+//
+//            String archive = Category_URL + "/100" + category.getId();
+//
+//            ResponseEntity<Category[]> response = testRestTemplate.getForEntity(archive, Category[].class);
+//
+//            assertEquals(204, response.getStatusCodeValue());
+//            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+//
+//
+//
+//        }
+
+
+
+
     }
 
     /**
@@ -395,8 +468,7 @@ class CategoryRestControllerTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        HttpEntity<String> request = new HttpEntity<>(json, headers);
-        return request;
+        return new HttpEntity<>(json, headers);
     }
 }
 
