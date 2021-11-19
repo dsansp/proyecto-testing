@@ -5,6 +5,7 @@ import com.example.proyectotesting.entities.Product;
 import com.example.proyectotesting.repository.CategoryRepository;
 import com.example.proyectotesting.repository.ManufacturerRepository;
 import com.example.proyectotesting.repository.ProductRepository;
+import com.example.proyectotesting.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,9 +24,13 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ProductRestControllerTest {
+    private ProductService productService;
+    private ProductRestController productRestController;
+    private TestRestTemplate restController;
     private static final String PRODUCTSURL = "/api/products";
     private TestRestTemplate testRestTemplate;
     @Autowired
@@ -38,7 +43,8 @@ class ProductRestControllerTest {
     void setUp() {
         restTemplateBuilder = restTemplateBuilder.rootUri("http://localhost:" + port);
         testRestTemplate = new TestRestTemplate(restTemplateBuilder);
-
+        this.productService = mock(ProductService.class);
+        this.productRestController = new ProductRestController(productService);
 
     }
 
@@ -286,10 +292,29 @@ class ProductRestControllerTest {
             assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
             ResponseEntity<Product> response2 = testRestTemplate.getForEntity(archive, Product.class);
             testRestTemplate.delete(archive);
-
             assertFalse(archive.isEmpty());
+        }
 
+        /**
+         * eneramos un Mock para lanzar la excepción 409 en deleteByIdl
+         */
+        @Test
+        @DisplayName("Excepción 409 al borrar con ID ")
+        void deleteFailID409Test() {
 
+            ResponseEntity<Product> response = deleteIdFailmock();
+
+            assertEquals(409, response.getStatusCodeValue());
+            assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        }
+
+        private ResponseEntity<Product> deleteIdFailmock() {
+            ProductRepository repository = mock(ProductRepository.class);
+            doReturn(true).when(productService).existsById(null);
+            doReturn(false).when(productService).deleteById(null);
+            doThrow(RuntimeException.class).when(repository).deleteById(null);
+
+            return productRestController.delete(null);
         }
 
         /**
@@ -313,7 +338,27 @@ class ProductRestControllerTest {
             assertEquals(0, products.size());
         }
 
+        /**
+         * Generamos un Mock para lanzar la excepción 409 en deleteAll
+         */
+        @Test
+        @DisplayName("Excepción 409 al borrar todos ")
+        void deleteFailAll409Test() {
 
+            ResponseEntity<Product> response = deleteAllFailmock();
+            assertEquals(409, response.getStatusCodeValue());
+            assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        }
+
+        private ResponseEntity<Product> deleteAllFailmock() {
+            ProductRepository repository = mock(ProductRepository.class);
+            ;
+            doReturn(false).when(productService).deleteAll();
+            doThrow(RuntimeException.class).when(repository).deleteById(null);
+
+            return productRestController.deleteAll();
+
+        }
     }
 
     private Product createDemoProduct() {
