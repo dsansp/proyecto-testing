@@ -17,7 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DeleteSeleniumTest extends BaseTest {
 
 
-        // Navegador
+    private static final String URL = "https://proyectogrupo1testing.herokuapp.com/products";
+    // Navegador
         WebDriver driver;
 
         @BeforeEach
@@ -55,7 +56,7 @@ public class DeleteSeleniumTest extends BaseTest {
         @Test
         void DeleteallTest() {
             driver.manage().window().maximize();
-            driver.get("http://localhost:8082/products");
+            driver.get(URL);
             WebElement h1 = driver.findElement(By.tagName("h1"));
             String h1Text = h1.getText();
             assertEquals("Products Directory", h1Text);
@@ -76,7 +77,7 @@ public class DeleteSeleniumTest extends BaseTest {
         @Test
         void DeleteEmptyListTest() {
             driver.manage().window().maximize();
-            driver.get("http://localhost:8082/products");
+            driver.get(URL);
             WebElement h1 = driver.findElement(By.tagName("h1"));
             String h1Text = h1.getText();
             assertEquals("Products Directory", h1Text);
