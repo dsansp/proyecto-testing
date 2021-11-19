@@ -16,8 +16,8 @@ public class ProductListTest extends BaseTest{
     @Disabled
     @Test
     void cargarPaginaTest(){
-        webdriver.get(URL);
-        webdriver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[2]/td[7]/a[1]")).click();
+        driver.get(URL);
+        driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[2]/td[7]/a[1]")).click();
 
 
     }

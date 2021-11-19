@@ -1,35 +1,49 @@
 package com.example.proyectotesting.selenium;
 
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.opera.OperaDriver;
 
 public class BaseTest {
     //Driver del navegador
-    WebDriver webdriver;
+    WebDriver driver;
     JavascriptExecutor js;
 
 
 
 
     @BeforeEach
-    void setup() {
-        //esta es la ruta del proyecto
-        String dir = System.getProperty("user.dir");
-        String driverUrl = "/driver/chromedriver.exe";
-        String url = dir + driverUrl;
-        System.setProperty("webdriver.chrome.driver", url);
-        //Driver de Google Chrome
-        webdriver = new ChromeDriver();
+    void setUp() {
+        System.getenv().forEach((key, value) -> System.out.println(key + " " + value));
+        System.getProperties().forEach((key, value) -> System.out.println(key + " " + value));
+
+        if(System.getProperties().get("os.name").equals("Linux")){
+            System.out.println("Configurando Navegador Chrome Headless para CI");
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--headless");
+            driver = new ChromeDriver(options);
+        }else{
+            System.out.println("Configurando Navegador Chrome desde carpeta drivers para testing en desarrollo");
+            String dir = System.getProperty("user.dir"); // ruta del proyecto
+            String driverUrl = "/drivers/chromedriver.exe";
+            String url = dir + driverUrl;
+            System.setProperty("webdriver.chrome.driver", url);
+            driver = new ChromeDriver(); // Google Chrome
+        }
     }
 
     @AfterEach
     void tearDown() {
-        webdriver.quit();
+        driver.quit();
 
     }
 
