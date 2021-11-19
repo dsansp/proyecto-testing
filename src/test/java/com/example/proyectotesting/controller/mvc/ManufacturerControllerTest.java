@@ -24,7 +24,7 @@ class ManufacturerControllerTest {
 
     @Test
     void list() throws Exception {
-        mvc.perform(get("/manufacturer")) // url a testear: http://localhost:8082/manufacturer
+        mvc.perform(get("/manufacturers")) // url a testear: http://localhost:8082/manufacturer
                 .andExpect(status().isOk()) // estado HTTP de la respuesta 200
                 .andExpect(model().attributeExists("manufacturers")) // comprobar los atributos cargados en el modelo
                 .andExpect( forwardedUrl("/WEB-INF/views/manufacturer-list.jsp")); // vista que se mostrará
