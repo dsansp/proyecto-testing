@@ -19,35 +19,7 @@ public class DeleteSeleniumTest extends BaseTest {
 
     private static final String URL = "https://proyectogrupo1testing.herokuapp.com/products";
     // Navegador
-        WebDriver driver;
 
-        @BeforeEach
-        void setUp() {
-            System.getenv().forEach((key, value) -> System.out.println(key + " " + value));
-            System.getProperties().forEach((key, value) -> System.out.println(key + " " + value));
-
-            if(System.getProperties().get("os.name").equals("Linux")){
-                System.out.println("Configurando Navegador Chrome Headless para CI");
-                WebDriverManager.chromedriver().setup();
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");
-                options.addArguments("--headless");
-                driver = new ChromeDriver(options);
-            }else{
-                System.out.println("Configurando Navegador Chrome desde carpeta drivers para testing en desarrollo");
-                String dir = System.getProperty("user.dir"); // ruta del proyecto
-                String driverUrl = "/drivers/chromedriver.exe";
-                String url = dir + driverUrl;
-                System.setProperty("webdriver.chrome.driver", url);
-                driver = new ChromeDriver(); // Google Chrome
-            }
-        }
-
-        @AfterEach
-        void tearDown() {
-            driver.quit();
-        }
 
     /**
      * Probamos de pulsar el botón borrar productos, habiendo
