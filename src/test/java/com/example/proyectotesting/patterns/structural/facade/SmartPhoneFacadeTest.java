@@ -2,19 +2,22 @@ package com.example.proyectotesting.patterns.structural.facade;
 
 import com.example.proyectotesting.patterns.structural.facade.pieces.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SmartPhoneFacadeTest {
-    SmartPhoneFacade smartphone;
 
+    SmartPhone smartPhone;
 
     @BeforeEach
     void setUp() {
+        smartPhone = SmartPhoneFacade.startSmartPhone();
         Battery battery = new Battery();
         CPU cpu = new CPU();
         Screen screen = new Screen();
@@ -42,12 +45,7 @@ class SmartPhoneFacadeTest {
         check.stop();
         assertFalse(check.getOn());
 
-
-
-
-
     }
-
 
     @Test
     void batteryTest() {
@@ -86,9 +84,8 @@ class SmartPhoneFacadeTest {
     }
     @Test
     void SetOnTest(){
-        SmartPhone check = SmartPhoneFacade.startSmartPhone();
-        boolean checkOn= check.getOn();
-        assertTrue(checkOn);
+        smartPhone.setOn(false);
+        assertFalse(smartPhone.getOn());
 
 
 
@@ -96,17 +93,11 @@ class SmartPhoneFacadeTest {
 
     @Test
     void SensorsTest() {
-        SmartPhone oneplus = SmartPhoneFacade.startSmartPhone();
-        oneplus.start();
-        List<Sensor> sensorBefore = oneplus.getSensors();
-        oneplus.stop();
-        System.out.println(sensorBefore);
-        List<Sensor> checkSensor = oneplus.getSensors();
-        GPSSensor gpsSensor = new GPSSensor();
-        NFCSensor nfcSensor = new NFCSensor();
-        gpsSensor.stop();
-        nfcSensor.stop();
-        System.out.println(checkSensor);
+    List<Sensor> sensorCheckList = new ArrayList<Sensor>();
+    sensorCheckList.add(new NFCSensor());
+    sensorCheckList.add(new GPSSensor());
+    smartPhone.setSensors(sensorCheckList);
+    assertEquals(sensorCheckList,smartPhone.getSensors());
     }
 
 }
