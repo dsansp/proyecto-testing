@@ -1,7 +1,9 @@
 package com.example.proyectotesting.patterns.creational.factory;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class EmpleadoFactoryTest {
 
@@ -14,19 +16,33 @@ class EmpleadoFactoryTest {
 
     @Test
     void getEmpleadoMECANICOTest() {
-        Empleado empleado1;
-           // Empleado return = empleadoFactory.
+
+        EmpleadoType empleadoType = EmpleadoType.valueOf("MECANICO");
+
+        EmpleadoFactory empleadofactory = new EmpleadoFactory();
+        empleadofactory.getEmpleado(empleadoType);
+
     }
 
     @Test
     void getEmpleadoPROGRAMADORTest() {
-        Empleado empleado1;
-          //  Empleado return = empleadoFactory.
-    }
 
+        EmpleadoFactory empleadofactory = new EmpleadoFactory();
+
+        Empleado empleado1 = empleadofactory.getEmpleado(EmpleadoType.PROGRAMADOR);
+
+    }
+@Disabled
     @Test
     void getEmpleadoIllegalArgumentExceptionTest() {
-        Empleado empleado1;
-           // Empleado return = empleadoFactory.
+        EmpleadoType empleadoType = EmpleadoType.valueOf("OTRO");
+
+        EmpleadoFactory empleadofactory = new EmpleadoFactory();
+        empleadofactory.getEmpleado(empleadoType);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> empleadofactory.getEmpleado(EmpleadoType.valueOf("OTRO"))
+        );
     }
 }
