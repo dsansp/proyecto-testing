@@ -1,18 +1,87 @@
 package com.example.proyectotesting.selenium;
 
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ManufacturerEditTest extends BaseTest {
 
-    private static final String URL = "http://localhost:8082/manufacturers";
-    @Disabled
-    @Test
-    void cargarFabricantePaginaTest(){
-        //webdriver.get(URL);
-        //webdriver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[2]/td[5]/a")).click();
 
+    private static final String manufacturersURL = "http://localhost:8082/manufacturers";
+    private static final String editURL = "http://localhost:8082/manufacturers/1/edit";
+
+
+    /**
+     * Acceder desde la lista de fabricantes pulsando Editar
+    */
+    @Test
+    @DisplayName("Click boton editar")
+    void buttonEditar() {
+        driver.get(manufacturersURL);
+        WebElement button = driver.findElement(By.xpath("/html/body/div/table/tbody/tr[2]/td[8]/a[2]"));
+        button.click();
+
+    }
+
+    @Test
+    @DisplayName("Titulo del fabricante")
+    void CheckTitleAdidasTextTest() {
+
+        driver.get(editURL);
+
+        assertEquals("Fabricante 1", driver.
+                findElement(By.cssSelector("h2")).getText());
+        assertEquals("Manufacturer Edition | Aswesome App", driver.getTitle());
+
+    }
+
+    @Test
+    @DisplayName("Click boton guardar/salir ")
+    void buttonSaveAndExit() {
+        driver.get(editURL);
+        WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
+        js.executeScript("arguments[0].scrollIntoView();", button);
+        Actions actions = new Actions(driver);
+        actions.click(button).perform();
+        assertEquals("Manufacturer List | Awesome App", driver.getTitle());
+    }
+
+    @Test
+    @DisplayName("Seleccionar producto zapatillas del menu")
+    void adidasSelectZapatillas() {
+
+        driver.get(editURL);
+
+        WebElement input = driver.findElement(By.xpath("//option[@value='13']"));
+        input.click();
+
+        Actions action = new Actions(driver);
+        action.keyDown(Keys.CONTROL).click().perform();
+    }
+    @Test
+    @DisplayName("Seleccionar producto zapatillas del menu")
+    void adidasSelectAll() {
+
+        driver.get(editURL);
+
+        WebElement multiSelect = driver.findElement(By.id("products"));
+        js.executeScript("arguments[0].scrollIntoView();", multiSelect);
+
+        // equivalente xpath: //select[@id='cars']/option
+        List<WebElement> options = driver.findElements(By.cssSelector("#products option"));
+
+        for (WebElement option: options) {
+            Actions action = new Actions(driver);
+            action.keyDown(Keys.CONTROL).click(option).perform();
+        }
     }
 
 }
