@@ -1,5 +1,6 @@
 package com.example.proyectotesting.controller.mvc;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +47,32 @@ class ManufacturerControllerTest {
     void showForm() {
     }
 
+    @Disabled
     @Test
-    void save() {
+    void save() throws Exception {
+        mvc.perform(get("/manufacturers"))
+                .andExpect(model().attributeExists("manufacturers"))
+                .andExpect(redirectedUrl("/manufacturers"));
+    }
+
+    @Disabled
+    @Test
+    void delete() throws Exception {
+
+
+        mvc.perform(get("/manufacturers/{id}/delete", "1L").accept("id"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(model().attributeExists("manufacturers"))
+                .andExpect(redirectedUrl("/manufacturers"));
     }
 
     @Test
-    void delete() {
-    }
+    void deleteAll() throws Exception {
+        mvc.perform(get("/manufacturers/delete/all"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/manufacturers"));
 
-    @Test
-    void deleteAll() {
+
+
     }
 }
