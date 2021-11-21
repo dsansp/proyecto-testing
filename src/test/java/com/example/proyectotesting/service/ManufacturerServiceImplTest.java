@@ -1,8 +1,9 @@
-/*
+
 package com.example.proyectotesting.service;
 
 import com.example.proyectotesting.entities.Manufacturer;
 import com.example.proyectotesting.repository.ManufacturerRepository;
+import com.example.proyectotesting.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,14 @@ import static org.mockito.Mockito.*;
 class ManufacturerServiceImplTest {
     ManufacturerService manufacturerService;
     ManufacturerRepository manufacturerRepository;
+    ProductRepository productRepository;
 
 
 
     @BeforeEach
     void setUp() {
         manufacturerRepository = mock(ManufacturerRepository.class);
-        this.manufacturerService = new ManufacturerServiceImpl(manufacturerRepository);
+        this.manufacturerService = new ManufacturerServiceImpl(manufacturerRepository, productRepository);
 
     }
 
@@ -83,9 +85,38 @@ class ManufacturerServiceImplTest {
     }
 
     @Test
-    void findByYearTest() {
-        List<Manufacturer> manufacturer = manufacturerService.findByYear(2021);
-        assertNotNull(manufacturer);
+    void findByYear() {
+        List<Manufacturer> manufacturers1 = Arrays.asList(
+                new Manufacturer("Adidas", "123456A", 55000, 1936),
+                new Manufacturer("Reebok", "12345678C", 65000, 1936)
+        );
+        List<Manufacturer> manufacturers2 = Arrays.asList(
+                new Manufacturer("Nike", "1234567B", 78000, 1946),
+                new Manufacturer("Puma", "123456789D", 35000, 1946)
+        );
+
+        when(manufacturerRepository.findByYear(1936)).thenReturn(manufacturers1);
+        when(manufacturerRepository.findByYear(1946)).thenReturn(manufacturers2);
+        List<Manufacturer> manufacturersOne = manufacturerService.findByYear(1936);
+        List<Manufacturer> manufacturersTwo = manufacturerService.findByYear(1946);
+        assertAll(
+                () -> assertFalse(manufacturersOne.isEmpty()),
+                () -> assertEquals("Adidas", manufacturersOne.get(0).getName()),
+                () -> assertEquals("123456A", manufacturersOne.get(0).getCif()),
+                () -> assertEquals(55000, manufacturersOne.get(0).getNumEmployees()),
+                () -> assertEquals("Reebok", manufacturersOne.get(1).getName()),
+                () -> assertEquals("12345678C", manufacturersOne.get(1).getCif()),
+                () -> assertEquals(65000, manufacturersOne.get(1).getNumEmployees()),
+                () -> assertFalse(manufacturersTwo.isEmpty()),
+                () -> assertEquals("Nike", manufacturersTwo.get(0).getName()),
+                () -> assertEquals("1234567B", manufacturersTwo.get(0).getCif()),
+                () -> assertEquals(78000, manufacturersTwo.get(0).getNumEmployees()),
+                () -> assertEquals("Puma", manufacturersTwo.get(1).getName()),
+                () -> assertEquals("123456789D", manufacturersTwo.get(1).getCif()),
+                () -> assertEquals(35000, manufacturersTwo.get(1).getNumEmployees())
+        );
+        verify(manufacturerRepository).findByYear(1936);
+        verify(manufacturerRepository).findByYear(1946);
     }
 
     @Test
@@ -110,6 +141,7 @@ class ManufacturerServiceImplTest {
                 .thenReturn(new Manufacturer());
         Manufacturer manufacturer = manufacturerService.save(new Manufacturer());
         assertNotNull(manufacturer);
+
     }
 
     @Test
@@ -126,7 +158,7 @@ class ManufacturerServiceImplTest {
         boolean result = manufacturerService.deleteById(anyLong());
         assertFalse(result);
         assertThrows(Exception.class, () -> manufacturerRepository.deleteById(anyLong()));
-        //Aqui tambien times 1 no se si estaba puesto ya
+
         verify(manufacturerRepository,times(1)).deleteById(anyLong());
     }
     @Test
@@ -160,7 +192,7 @@ class ManufacturerServiceImplTest {
             boolean result = manufacturerService.deleteById(1L);
             assertThrows(Exception.class, () -> manufacturerRepository.deleteById(1L));
 
-            //Aqui puse times 1
+
             verify(manufacturerRepository, times(1)).deleteById(1L);
             assertFalse(result);
 
@@ -216,5 +248,4 @@ class ManufacturerServiceImplTest {
 
 }
 
- */
 

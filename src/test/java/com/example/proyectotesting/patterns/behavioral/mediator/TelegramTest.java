@@ -12,17 +12,19 @@ public class TelegramTest {
 
     @Test
     public void sendMessageTest(){
-        //randomUser = new User(new Telegram(), "name2");
+
         Telegram telegram = new Telegram();
-        AbstractUser user1 = mock(AbstractUser.class);
         String message = "message";
 
-        doNothing().when(user1).receive(anyString());
+        AbstractUser user1 = mock(AbstractUser.class);
+        AbstractUser user2 = mock(AbstractUser.class);
         telegram.addUser(user1);
+        telegram.addUser(user2);
 
+        // el usuario1 envia mensaje
         telegram.sendMessage(message, user1);
-
-        verify(user1).receive(message);
+        // el usuario2 lo recibe
+        verify(user2).receive(message);
     }
 
     @Test
@@ -46,6 +48,6 @@ public class TelegramTest {
         int list = telegram.users.size();
         telegram.addUser(user1);
         telegram.removeUser(user1);
-        assertEquals(list, telegram.users.size());
+        assertTrue(list == telegram.users.size());
     }
 }
