@@ -20,19 +20,30 @@ class EmpleadoFactoryTest {
         EmpleadoType empleadoType = EmpleadoType.valueOf("MECANICO");
 
         EmpleadoFactory empleadofactory = new EmpleadoFactory();
+
+        Empleado empleado1 = empleadofactory.getEmpleado(EmpleadoType.MECANICO);
+
         empleadofactory.getEmpleado(empleadoType);
+
+        assertNotNull(empleadoType);
+        assertNotNull(empleado1);
 
     }
 
     @Test
     void getEmpleadoPROGRAMADORTest() {
+        EmpleadoType empleadoType = EmpleadoType.valueOf("PROGRAMADOR");
 
         EmpleadoFactory empleadofactory = new EmpleadoFactory();
 
         Empleado empleado1 = empleadofactory.getEmpleado(EmpleadoType.PROGRAMADOR);
 
+        assertNotNull(empleado1);
+        assertNotNull(empleadoType);
+
     }
-@Disabled
+
+    @Disabled
     @Test
     void getEmpleadoIllegalArgumentExceptionTest() {
         EmpleadoType empleadoType = EmpleadoType.valueOf("OTRO");
@@ -45,4 +56,5 @@ class EmpleadoFactoryTest {
                 () -> empleadofactory.getEmpleado(EmpleadoType.valueOf("OTRO"))
         );
     }
+
 }
