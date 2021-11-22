@@ -48,9 +48,8 @@ public class ManufacturerEditTest extends BaseTest {
     void buttonSaveAndExit() {
         driver.get(editURL);
         WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
-        js.executeScript("arguments[0].scrollIntoView();", button);
-        Actions actions = new Actions(driver);
-        actions.click(button).perform();
+        button.submit();
+
         assertEquals("Manufacturer List | Awesome App", driver.getTitle());
     }
 
@@ -63,16 +62,18 @@ public class ManufacturerEditTest extends BaseTest {
         WebElement input = driver.findElement(By.xpath("//option[@value='13']"));
         input.click();
 
-        Actions action = new Actions(driver);
-        action.keyDown(Keys.CONTROL).click().perform();
+        assertEquals(true, driver.findElement(By.xpath("//option[@value='13']")).isSelected());
+
+        //status = "passsed";
     }
     @Test
-    @DisplayName("Seleccionar producto zapatillas del menu")
+    @DisplayName("Seleccionar todos productos del menu")
     void adidasSelectAll() {
 
         driver.get(editURL);
+        driver.manage().window().maximize();
 
-        WebElement multiSelect = driver.findElement(By.id("products"));
+        WebElement multiSelect = driver.findElement(By.xpath("//*[@id=\"products\"]"));
         js.executeScript("arguments[0].scrollIntoView();", multiSelect);
 
         // equivalente xpath: //select[@id='cars']/option
