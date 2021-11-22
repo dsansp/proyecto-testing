@@ -75,6 +75,7 @@ public class ManufacturerEditTest extends BaseTest {
 
         WebElement multiSelect = driver.findElement(By.xpath("//*[@id=\"products\"]"));
         js.executeScript("arguments[0].scrollIntoView();", multiSelect);
+        multiSelect.click();
 
         // equivalente xpath: //select[@id='cars']/option
         List<WebElement> options = driver.findElements(By.cssSelector("#products option"));
