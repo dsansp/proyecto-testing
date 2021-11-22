@@ -46,15 +46,15 @@ class EmpleadoFactoryTest {
     @Disabled
     @Test
     void getEmpleadoIllegalArgumentExceptionTest() {
-        EmpleadoType empleadoType = EmpleadoType.valueOf("OTRO");
+
 
         EmpleadoFactory empleadofactory = new EmpleadoFactory();
-        empleadofactory.getEmpleado(empleadoType);
+
 
         assertThrows(
                 IllegalArgumentException.class,
-                () -> empleadofactory.getEmpleado(EmpleadoType.valueOf("OTRO"))
-        );
+                () -> empleadofactory.getEmpleado(null));
+
     }
 
 }
