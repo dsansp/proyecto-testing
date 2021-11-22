@@ -3,10 +3,7 @@ package com.example.proyectotesting.controller.mvc;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.proyectotesting.repository.ProductRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -37,20 +34,35 @@ class ProductControllerTest {
     @Autowired
     MockMvc mvc;
     ProductRepository repository;
+    @Nested
+    class borrar {
+        @Test
+        void borrarProductoIdOk() throws Exception {
+            mvc.perform(get("/products/9/delete"))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/products"));
+        }
 
-  /*  @BeforeEach
-    public void setup () {
-        DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
-        this.mvc = builder.build();
 
-   */
+        @Test
+        void borrarProductos() throws Exception {
+
+            mvc.perform(get("/products/delete/all"))
+                    .andExpect(status().is3xxRedirection())
+                    .andExpect(redirectedUrl("/products"));
+
+        }
+    }
+
+@Nested
+class obterner {
     @Test
     void obtenerLista() throws Exception {
         mvc.perform(get("/products/"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("products"))
                 .andExpect(view().name("product-list")) // comprobar los atributos cargados en el modelo
-                .andExpect( forwardedUrl("/WEB-INF/views/product-list.jsp"));
+                .andExpect(forwardedUrl("/WEB-INF/views/product-list.jsp"));
 
     }
 
@@ -61,13 +73,15 @@ class ProductControllerTest {
                 .andExpect(model().attributeExists("product"))
                 .andExpect(model().attributeExists("manufacturers"))
                 .andExpect(model().attributeExists("categories"))
-                .andExpect( forwardedUrl("/WEB-INF/views/product-edit.jsp"));
+                .andExpect(forwardedUrl("/WEB-INF/views/product-edit.jsp"));
     }
-
+}
+@Nested
+class crearUpdate {
     @Test
     void crearProducto() throws Exception {
         mvc.perform(
-                post("/products")
+                        post("/products")
                                 .param("name", "producto prueba")
                                 .param("description", "Descripción producto")
                                 .param("price", "99.88")
@@ -75,75 +89,40 @@ class ProductControllerTest {
                 ).andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/products"));
 
-    }
-@Disabled
-    @Test
-    void verProductoFound() throws Exception {
-        mvc.perform(get("/products/{id}/edit", "1L").accept(("id")))
-                .andExpect(status().isOk());
-
 
     }
-@Disabled
-    @Test
-    void verProductoNullId() throws Exception {
-      mvc.perform(get("/{id}/view/","id" ,null))
-               .andExpect(status().is4xxClientError())
-             //   .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/products"));
-
-
-
-
-        ;
-
-}
-
-
-@Disabled
     @Test
     void editarProductoFound() throws Exception {
-        mvc.perform(get("/{id}/edit/", "4L"))
-                .andExpect(status().isFound())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/products"));
-
-
-
-    }
-    @Disabled
-    ///solamente conseguimos  un status 404
-    @Test
-    void borrarProductoIdOk() throws Exception {
-        mvc.perform(get("/{id}/delete",1L))
+        mvc.perform(get("/products/11/edit/"))
                 .andExpect(status().isOk())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/products"));
+                .andExpect(forwardedUrl("/WEB-INF/views/product-edit.jsp"));
+
+
+    }
+}
+@Nested
+class found{
+    @Test
+    void verProductoFound() throws Exception {
+        mvc.perform(get("/products/9/view"))
+                .andExpect(status().isOk())
+.andExpect( forwardedUrl("/WEB-INF/views/product-view.jsp"));
+
     }
     @Test
-    void borrarProductoIdNotFound() throws Exception {
-        mvc.perform( MockMvcRequestBuilders.get("/{id}/delete", 99L) )
-                .andExpect(status().isNotFound())
-                .andExpect(status().is4xxClientError())
+    void verProductoNotFound() throws Exception {
+        mvc.perform(get("/products/9999/view"))
+                .andExpect(status().is3xxRedirection());
 
 
-        ;
-    }
-@Disabled
-    @Test
-    void borrarProductos() throws Exception {
-
-        mvc.perform(MockMvcRequestBuilders.get("/delete/all"))
-                .andExpect(status().isNotFound())
-             .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/products"));
 
     }
-@Disabled
+
+
+    }
     @Test
     void formWithManufacturer() throws Exception {
-        mvc.perform(get("/new/manufacturer/1", 1L))
-                .andExpect(status().isFound())
+        mvc.perform(get("/products/new/manufacturer/1"))
                 .andExpect(model().attributeExists("manufacturer"))
                 .andExpect( forwardedUrl("/WEB-INF/views/product-edit-withmanufacturer.jsp"));
 
