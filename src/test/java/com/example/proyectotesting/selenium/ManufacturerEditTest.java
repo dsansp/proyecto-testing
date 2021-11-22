@@ -48,9 +48,8 @@ public class ManufacturerEditTest extends BaseTest {
     void buttonSaveAndExit() {
         driver.get(editURL);
         WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
-        js.executeScript("arguments[0].scrollIntoView();", button);
-        Actions actions = new Actions(driver);
-        actions.click(button).perform();
+        button.submit();
+
         assertEquals("Manufacturer List | Awesome App", driver.getTitle());
     }
 
