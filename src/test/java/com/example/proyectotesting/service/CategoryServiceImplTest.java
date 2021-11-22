@@ -25,11 +25,16 @@ import static org.mockito.Mockito.*;
 class CategoryServiceImplTest {
 
 
+
+
          @BeforeEach
         void setUp() {
             MockitoAnnotations.openMocks(this);
             this.service = new CategoryServiceImpl(categoryRepository);
             System.out.println("Ejecutando test con Mockito");
+
+
+
         }
 
         @Mock //dependencia
@@ -43,6 +48,26 @@ class CategoryServiceImplTest {
         void tearDown() {
             System.out.println("Finalizando test con Mockito");
         }
+
+        @Test
+        void categoryClassTest(){
+            List<Product> products1 = new ArrayList<>();
+            Manufacturer made = new Manufacturer();
+            products1.add(new Product("Balón", "futbol", 2, 10.99,made));
+            products1.add(new Product("Chanclas", "Natación", 3, 12.0, made));
+
+            List<Product> products2 = new ArrayList<>();
+            products2.add(new Product("Tamagochi", "Tecnologia", 2, 16.99,made));
+            products2.add(new Product("PS4", "Videoconsolas", 1, 250.0, made));
+            made.setProducts(products2);
+            assertEquals(products2, made.getProducts());
+            assertEquals(2, products2.size());
+
+            assertNotNull(products2);
+        }
+
+
+
 
 
         @DisplayName("findAll()->Comprobamos que se encuentran todas las categorias")
