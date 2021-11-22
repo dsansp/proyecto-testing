@@ -31,6 +31,7 @@ public class BaseTest {
             options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--headless");
             driver = new ChromeDriver(options);
+            js = (JavascriptExecutor) driver;
         }else{
             System.out.println("Configurando Navegador Chrome desde carpeta drivers para testing en desarrollo");
             String dir = System.getProperty("user.dir"); // ruta del proyecto
@@ -38,6 +39,7 @@ public class BaseTest {
             String url = dir + driverUrl;
             System.setProperty("webdriver.chrome.driver", url);
             driver = new ChromeDriver(); // Google Chrome
+            js = (JavascriptExecutor) driver;
         }
     }
 
