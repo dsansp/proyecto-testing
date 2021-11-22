@@ -33,9 +33,6 @@ public class ManufacturerController {
 	
 	@GetMapping("/manufacturers/{id}/view")
 	public String view(@PathVariable Long id, Model model) {
-		if (id == null) {
-			return "redirect:/manufacturers";
-		}
 		Optional<Manufacturer> manOpt = manufacturerService.findOne(id);
 		if (manOpt.isPresent()) {
 			model.addAttribute("manufacturer", manOpt.get());
@@ -46,9 +43,7 @@ public class ManufacturerController {
 	
 	@GetMapping("/manufacturers/{id}/edit")
 	public String loadForm(@PathVariable Long id, Model model) {
-		if(id == null)
-			return "redirect:/manufacturers";
-		
+
 		Optional<Manufacturer> manOpt = manufacturerService.findOne(id);
 		if (manOpt.isPresent()) {
 			model.addAttribute("manufacturer", manOpt.get());
@@ -72,7 +67,6 @@ public class ManufacturerController {
 		manufacturerService.save(manufacturer);
 		return "redirect:/manufacturers";
 	}
-
 
 	@GetMapping("/manufacturers/{id}/delete")
 	public String delete(@PathVariable Long id) {
