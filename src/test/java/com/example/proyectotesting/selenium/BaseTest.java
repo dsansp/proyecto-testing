@@ -35,7 +35,7 @@ public class BaseTest {
         }else{
             System.out.println("Configurando Navegador Chrome desde carpeta drivers para testing en desarrollo");
             String dir = System.getProperty("user.dir"); // ruta del proyecto
-            String driverUrl = "/drivers/chromedriver.exe";
+            String driverUrl = "/driver/chromedriver.exe";
             String url = dir + driverUrl;
             System.setProperty("webdriver.chrome.driver", url);
             driver = new ChromeDriver(); // Google Chrome

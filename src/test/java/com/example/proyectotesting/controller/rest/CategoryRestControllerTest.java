@@ -365,36 +365,6 @@ class CategoryRestControllerTest {
 
 
 
-
-        /**
-         * Método que comprueba que se puede eliminar todas las categorias
-         *
-         */
-
-//        @DisplayName("comprobamos que borramos todas las categorias ")
-//@Disabled
-//        @Test
-//        void deleteAllSuccess() {
-//            createDataCategories();
-//            createDataCategories();
-//
-//            ResponseEntity<Category[]> response = testRestTemplate.getForEntity(Category_URL, Category[].class);
-//
-//            assertNotNull(response.getBody());
-//
-//            List<Category> categories = List.of(response.getBody());
-//
-//            assertTrue(categories.size() >= 2);
-//
-//            testRestTemplate.delete(Category_URL);
-//            response = testRestTemplate.getForEntity(Category_URL, Category[].class);
-//
-//            assertNotNull(response.getBody());
-//
-//            //categories = List.of(response.getBody());
-//      //      assertEquals(0, categories.size());
-//        }
-
         /**
          * Método que lanzará una excepcion 409 en el metodo de deleteAll()
          * devuelve como respuesta un CONFLICT que es el numero 409
@@ -417,29 +387,6 @@ class CategoryRestControllerTest {
             return categoryRestController.deleteAll();
 
         }
-
-
-        //En proceso de arreglar
-//        @Test
-//        void deleteAllNoContentTest(){
-////            ResponseEntity<Category[]> response = testRestTemplate.getForEntity(Category_URL, Category[].class);
-////            assertEquals(204, response.getStatusCodeValue());
-////            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-//
-//            Category category = createDataCategories();
-//
-//            String archive = Category_URL + "/100" + category.getId();
-//
-//            ResponseEntity<Category[]> response = testRestTemplate.getForEntity(archive, Category[].class);
-//
-//            assertEquals(204, response.getStatusCodeValue());
-//            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-//
-//
-//
-//        }
-
-
 
 
     }
