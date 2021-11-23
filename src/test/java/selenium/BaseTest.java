@@ -39,6 +39,7 @@ public class BaseTest {
             System.setProperty("webdriver.chrome.driver", url);
             driver = new ChromeDriver(); // Google Chrome
             js = (JavascriptExecutor) driver;
+            driver.manage().window().maximize();
         }
     }
 
