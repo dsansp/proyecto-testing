@@ -2,6 +2,9 @@ package com.example.proyectotesting.controller.mvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.proyectotesting.entities.Manufacturer;
+import com.example.proyectotesting.entities.Product;
+import com.example.proyectotesting.repository.ManufacturerRepository;
 import com.example.proyectotesting.repository.ProductRepository;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
@@ -14,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,16 +37,28 @@ class ProductControllerTest {
 
     @Autowired
     MockMvc mvc;
+    @Autowired
+    ManufacturerRepository manufacturerRepository;
+    @Autowired
     ProductRepository repository;
     @Nested
     class borrar {
         @Test
         void borrarProductoIdOk() throws Exception {
-            mvc.perform(get("/products/9/delete"))
-                    .andExpect(status().is3xxRedirection())
-                    .andExpect(redirectedUrl("/products"));
+            Manufacturer manufacturer = new Manufacturer("Sampletester", "A0001", 150, 95);
+            manufacturerRepository.save(manufacturer);
+            Product product = new Product("", "", 423, 2312D, manufacturer);
+            repository.save(product);
+            try {
+                mvc.perform(get("/products/9/delete"))
+                        .andExpect(status().is3xxRedirection())
+                        .andExpect(redirectedUrl("/products"));
+            } catch (Exception error) {
+                System.out.println("No hay productos en la base de datos");
+                error.printStackTrace();
+                assertTrue(false);
+            }
         }
-
 
         @Test
         void borrarProductos() throws Exception {
@@ -54,8 +70,7 @@ class ProductControllerTest {
         }
     }
 
-@Nested
-class obterner {
+
     @Test
     void obtenerLista() throws Exception {
         mvc.perform(get("/products/"))
@@ -75,9 +90,7 @@ class obterner {
                 .andExpect(model().attributeExists("categories"))
                 .andExpect(forwardedUrl("/WEB-INF/views/product-edit.jsp"));
     }
-}
-@Nested
-class crearUpdate {
+
     @Test
     void crearProducto() throws Exception {
         mvc.perform(
@@ -95,13 +108,16 @@ class crearUpdate {
     void editarProductoFound() throws Exception {
         mvc.perform(get("/products/11/edit/"))
                 .andExpect(status().isOk())
+                .andExpect(model().attributeExists("product"))
+                .andExpect(MockMvcResultMatchers.view().name("product-edit"))
                 .andExpect(forwardedUrl("/WEB-INF/views/product-edit.jsp"));
-
-
     }
-}
-@Nested
-class found{
+    @Test
+    void editarNotPresentTest() throws Exception {
+        mvc.perform(get("/products/1/edit"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/products"));
+    }
     @Test
     void verProductoFound() throws Exception {
         mvc.perform(get("/products/9/view"))
@@ -119,10 +135,10 @@ class found{
     }
 
 
-    }
     @Test
     void formWithManufacturer() throws Exception {
         mvc.perform(get("/products/new/manufacturer/1"))
+                .andExpect(status().is2xxSuccessful())
                 .andExpect(model().attributeExists("manufacturer"))
                 .andExpect( forwardedUrl("/WEB-INF/views/product-edit-withmanufacturer.jsp"));
 
