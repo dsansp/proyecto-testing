@@ -137,4 +137,31 @@ public class ManufacturerEditTest extends BaseTest {
 
 
     }
+
+    @Test
+    void editManufacturerAdidasDirection() {
+        driver.get(editURL);
+
+        driver.findElement(By.cssSelector("#direction\\.street")).clear();
+        driver.findElement(By.cssSelector("#direction\\.street")).sendKeys("castellana 69");
+        driver.findElement(By.cssSelector("#direction\\.postalCode")).clear();
+        driver.findElement(By.cssSelector("#direction\\.postalCode")).sendKeys("13326");
+        driver.findElement(By.cssSelector("#direction\\.city")).clear();
+        driver.findElement(By.cssSelector("#direction\\.city")).sendKeys("Montiel");
+        driver.findElement(By.cssSelector("#direction\\.country")).clear();
+        driver.findElement(By.cssSelector("#direction\\.country")).sendKeys("Filipinas");
+
+        WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
+        button.submit();
+
+
+        // check if data is edited in manufacturer list
+        driver.get(manufacturersURL);
+        assertEquals("Manufacturer List | Awesome App", driver.getTitle());
+
+        assertEquals("castellana 69", driver.findElement(By.cssSelector("body > div > table > tbody > tr:nth-child(2) > td:nth-child(5)")).getText());
+        assertEquals("Filipinas", driver.findElement(By.cssSelector("body > div > table > tbody > tr:nth-child(2) > td:nth-child(6)")).getText());
+
+
+    }
 }
