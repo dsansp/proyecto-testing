@@ -3,7 +3,7 @@ import org.junit.platform.suite.api.SelectPackages;
 import org.junit.runner.RunWith;
 
 @RunWith(JUnitPlatform.class)
-@SelectPackages({"com.example.proyectotesting.selenium"})
+@SelectPackages({"selenium"})
 
 
 public class SeleniumSuiteTest {
