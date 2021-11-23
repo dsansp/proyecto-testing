@@ -80,7 +80,8 @@ public class ManufacturerEditTest extends BaseTest {
         driver.manage().window().maximize();
 
         List<WebElement> options = driver.findElements(By.xpath("//*[@id=\"products\"]"));
-        js.executeScript("arguments[0].scrollIntoView();", options);
+
+        options.clear();
 
         for (WebElement option: options) {
             Actions action = new Actions(driver);
