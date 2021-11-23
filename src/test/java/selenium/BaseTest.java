@@ -1,4 +1,4 @@
-package com.example.proyectotesting.selenium;
+package selenium;
 
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -8,7 +8,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.opera.OperaDriver;
 
 public class BaseTest {
     //Driver del navegador
@@ -35,7 +34,7 @@ public class BaseTest {
         }else{
             System.out.println("Configurando Navegador Chrome desde carpeta drivers para testing en desarrollo");
             String dir = System.getProperty("user.dir"); // ruta del proyecto
-            String driverUrl = "/driver/chromedriver.exe";
+            String driverUrl = "/drivers/chromedriver.exe";
             String url = dir + driverUrl;
             System.setProperty("webdriver.chrome.driver", url);
             driver = new ChromeDriver(); // Google Chrome

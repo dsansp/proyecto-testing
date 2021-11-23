@@ -1,15 +1,10 @@
-package com.example.proyectotesting.selenium;
+package selenium;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.opera.OperaDriver;
 
-public class ProductListTest extends BaseTest{
+public class ProductListTest extends BaseTest {
 
 
     private static final String URL = "https://proyectogrupo1testing.herokuapp.com/products";

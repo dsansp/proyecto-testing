@@ -1,7 +1,5 @@
-package com.example.proyectotesting.selenium;
+package selenium;
 
-import com.example.proyectotesting.entities.Manufacturer;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -9,11 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -97,6 +91,7 @@ public class ManufacturerEditTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("comprobar los titulos de el manufacturer")
     void AdidasDataTitles() {
         driver.get(editURL);
         driver.manage().window().maximize();
@@ -110,6 +105,7 @@ public class ManufacturerEditTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Comprobar ")
     void editManufacturerAdidasData() {
         driver.get(editURL);
 
