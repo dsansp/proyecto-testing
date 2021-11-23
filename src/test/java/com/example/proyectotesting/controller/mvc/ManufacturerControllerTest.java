@@ -57,8 +57,8 @@ class ManufacturerControllerTest {
         mvc.perform(get("/manufacturers/1/edit"))
                 .andExpect(forwardedUrl("/WEB-INF/views/manufacturer-edit.jsp"))
                 .andExpect(model().attributeExists("manufacturer"))
-                .andExpect(model().attributeExists("products"))
-                .andExpect(redirectedUrl("manufacturer-edit"));
+                .andExpect(model().attributeExists("products"));
+
     }
 
 
