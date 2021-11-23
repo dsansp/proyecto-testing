@@ -1,17 +1,15 @@
 package selenium;
 
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
+import org.openqa.selenium.support.ui.Select;
 
 public class AddProductTest extends BaseTest{
 
@@ -19,6 +17,7 @@ public class AddProductTest extends BaseTest{
     private static final String URL2 = "http://localhost:8082/products/new";
 
     @Test
+    @DisplayName("Comprobar el título de la página")
     void testTitle(){
         driver.get(URL1);
 
@@ -31,11 +30,12 @@ public class AddProductTest extends BaseTest{
     }
 
     /**
-     * Añadimos un fabriante pulsando en el botón "AÑADIR FABRICANTE"
+     * Añadimos un fabriante pulsando en el botón "AÑADIR PRODUCTO"
      */
 
     @Test
-    void addBuilderButtonTestOK() {
+    @DisplayName("Comprobar que el botón AÑADIR PRODUCTO redirige a la url new")
+    void addProductButtonTestOK() {
         driver.get(URL1);
 
         String title1 = driver.getTitle();
@@ -51,6 +51,7 @@ public class AddProductTest extends BaseTest{
     }
 
     @Test
+    @DisplayName("Comprobar el título de la página de nuevo producto ")
     void testTitle2(){
         driver.get(URL2);
 
@@ -63,6 +64,7 @@ public class AddProductTest extends BaseTest{
     }
 
     @Test
+    @DisplayName("Comprobar que se escribe el nombre en el TextBox")
     void TextBoxInputNameTestOK(){
         driver.get(URL2);
 
@@ -76,6 +78,7 @@ public class AddProductTest extends BaseTest{
     }
 
     @Test
+    @DisplayName("Comprobar que se escribe la descripción en el TextBox")
     void TextBoxInputDescriptionTestOK(){
         driver.get(URL2);
 
@@ -89,6 +92,7 @@ public class AddProductTest extends BaseTest{
     }
 
     @Test
+    @DisplayName("Comprobar que se escribe el precio en el TextBox")
     void TextBoxInputPrecioTestOK(){
         driver.get(URL2);
 
@@ -102,6 +106,7 @@ public class AddProductTest extends BaseTest{
     }
 
     @Test
+    @DisplayName("Comprobar que se escribe la cantidad en el TextBox")
     void TextBoxInputCantidadTestOK(){
         driver.get(URL2);
 
@@ -113,6 +118,39 @@ public class AddProductTest extends BaseTest{
         String inputValue = inputCantidad.getAttribute("value");
         assertEquals("25", inputValue);
     }
+
+    @Test
+    @DisplayName("Comprobar que se selecciona un fabricante llamado Adidas Shoes Inc")
+    void SelectSFirstBuilderTest(){
+        driver.get(URL2);
+
+        WebElement selector = driver.findElement(By.id("manufacturer"));
+        Select selectFabricante = new Select(selector);
+
+        selectFabricante.selectByVisibleText("Adidas Shoes Inc");
+        sleep();
+
+        WebElement firstSelectedOption = selectFabricante.getFirstSelectedOption();
+        boolean fabricante = firstSelectedOption.isSelected();
+        assertTrue(fabricante);
+    }
+
+    @Test
+    @DisplayName("Comprobar que se selecciona una categoría disponible llamada Libros")
+    void SelectSCategoryAvailableTest(){
+        driver.get(URL2);
+
+        WebElement selector = driver.findElement(By.id("categories"));
+        Select selectCategoria = new Select(selector);
+
+        selectCategoria.selectByVisibleText("Libros");
+        sleep();
+
+        WebElement firstSelectedOption = selectCategoria.getFirstSelectedOption();
+        boolean categoria = firstSelectedOption.isSelected();
+        assertTrue(categoria);
+    }
+
 
     private void sleep() {
         try {
