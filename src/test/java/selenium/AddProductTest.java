@@ -69,12 +69,12 @@ public class AddProductTest extends BaseTest{
         driver.get(URL2);
 
         WebElement inputName = driver.findElement(By.xpath("//*[@id=\"name\"]"));
-        inputName.sendKeys("INDITEX");
+        inputName.sendKeys("Zapato negro");
         sleep();
 
         inputName = driver.findElement(By.xpath("//*[@id=\"name\"]"));
         String inputValue = inputName.getAttribute("value");
-        assertEquals("INDITEX", inputValue);
+        assertEquals("Zapato negro", inputValue);
     }
 
     @Test
@@ -83,12 +83,12 @@ public class AddProductTest extends BaseTest{
         driver.get(URL2);
 
         WebElement inputDescription = driver.findElement(By.cssSelector("#description"));
-        inputDescription.sendKeys("Tienda de ropa");
+        inputDescription.sendKeys("Zapato de mujer negro con tacón medio");
         sleep();
 
         inputDescription = driver.findElement(By.cssSelector("#description"));
         String inputValue = inputDescription.getAttribute("value");
-        assertEquals("Tienda de ropa", inputValue);
+        assertEquals("Zapato de mujer negro con tacón medio", inputValue);
     }
 
     @Test
@@ -111,12 +111,12 @@ public class AddProductTest extends BaseTest{
         driver.get(URL2);
 
         WebElement inputCantidad = driver.findElement(By.xpath("//*[@id=\"quantity\"]"));
-        inputCantidad.sendKeys("25");
+        inputCantidad.sendKeys("1");
         sleep();
 
         inputCantidad = driver.findElement(By.xpath("//*[@id=\"quantity\"]"));
         String inputValue = inputCantidad.getAttribute("value");
-        assertEquals("25", inputValue);
+        assertEquals("1", inputValue);
     }
 
     @Test
@@ -136,8 +136,24 @@ public class AddProductTest extends BaseTest{
     }
 
     @Test
+    @DisplayName("Comprobar que se selecciona el segundo fabricante")
+    void SelectSecondBuilderTest(){
+        driver.get(URL2);
+
+        WebElement selector = driver.findElement(By.id("manufacturer"));
+        Select selectFabricante = new Select(selector);
+
+        selectFabricante.selectByIndex(1);
+        sleep();
+
+        WebElement secondSelectedOption = driver.findElement(By.xpath("//*[@id=\"manufacturer\"]/option[2]"));
+        boolean fabricante = secondSelectedOption.isSelected();
+        assertTrue(fabricante);
+    }
+
+    @Test
     @DisplayName("Comprobar que se selecciona una categoría disponible llamada Libros")
-    void SelectSCategoryAvailableTest(){
+    void SelectFirstCategoryAvailableTest(){
         driver.get(URL2);
 
         WebElement selector = driver.findElement(By.id("categories"));
@@ -146,9 +162,59 @@ public class AddProductTest extends BaseTest{
         selectCategoria.selectByVisibleText("Libros");
         sleep();
 
-        WebElement firstSelectedOption = selectCategoria.getFirstSelectedOption();
+        WebElement firstSelectedOption = driver.findElement(By.xpath("//*[@id=\"categories\"]/option[1]"));
         boolean categoria = firstSelectedOption.isSelected();
         assertTrue(categoria);
+    }
+
+    @Test
+    @DisplayName("Comprobar que se selecciona la segunda categoría")
+    void SelectSecondCategoryAvailableTest(){
+        driver.get(URL2);
+
+        WebElement selector = driver.findElement(By.id("categories"));
+        Select selectCategoria = new Select(selector);
+
+        selectCategoria.selectByIndex(1);
+        sleep();
+
+        WebElement secondSelectedOption = driver.findElement(By.xpath("//*[@id=\"categories\"]/option[2]"));
+        boolean categoria = secondSelectedOption.isSelected();
+        assertTrue(categoria);
+
+        String categoriaNombre = secondSelectedOption.getText();
+        assertEquals("Computación", categoriaNombre);
+    }
+
+    @Test
+    @DisplayName("Comprobar que se crea un producto")
+    void addProductOK() {
+        driver.get(URL2);
+
+        driver.findElement(By.cssSelector("#name")).clear();
+        driver.findElement(By.cssSelector("#name")).sendKeys("Zapatos negros");
+        driver.findElement(By.cssSelector("#description")).clear();
+        driver.findElement(By.cssSelector("#description")).sendKeys("Zapato de mujer negro con tacón medio");
+        driver.findElement(By.cssSelector("#price")).clear();
+        driver.findElement(By.cssSelector("#price")).sendKeys("25");
+        driver.findElement(By.cssSelector("#quantity")).clear();
+        driver.findElement(By.cssSelector("#quantity")).sendKeys("1");
+        //driver.findElement(By.cssSelector("#manufacturer")).clear();
+        driver.findElement(By.cssSelector("#manufacturer > option:nth-child(2)")).click();
+        driver.findElement(By.cssSelector("#categories > option:nth-child(4)")).click();
+
+        WebElement button = driver.findElement(By.xpath("//*[@id=\"product\"]/div[7]/button"));
+        button.submit();
+
+
+        //Comprobaciones
+        String title = driver.getTitle();
+        assertEquals("Product List | Awesome App",title);
+
+        assertEquals("Zapatos negros", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[7]/td[1]")).getText());
+        assertEquals("Zapato de mujer negro con tacón medio", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[7]/td[3]")).getText());
+        assertEquals("25.0", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[7]/td[2]")).getText());
+        assertEquals("1", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[7]/td[4]")).getText());
     }
 
 
