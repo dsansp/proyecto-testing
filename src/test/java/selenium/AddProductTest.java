@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 public class AddProductTest extends BaseTest{
 
     private static final String URL1 = "http://localhost:8082/products";
@@ -211,16 +213,19 @@ public class AddProductTest extends BaseTest{
         String title = driver.getTitle();
         assertEquals("Product List | Awesome App",title);
 
-        //assertEquals("Zapatos negros", driver.findElement(By.cssSelector("#products-list > tbody > tr:nth-child(4) > td:nth-child(1)")).getText());
-        //assertEquals("Zapato de mujer negro con tacón medio", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[7]/td[3]")).getText());
-        //assertEquals("25.0", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[7]/td[2]")).getText());
-        //assertEquals("1", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[7]/td[4]")).getText());
+        List <WebElement> productos = driver.findElements(By.cssSelector("tr"));
+        int n = productos.size();
+
+        assertEquals("Zapatos negros", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr["+ n +"]/td[1]")).getText());
+        assertEquals("Zapato de mujer negro con tacón medio", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr["+ n +"]/td[3]")).getText());
+        assertEquals("25.0", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr["+ n +"]/td[2]")).getText());
+        assertEquals("1", driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr["+ n +"]/td[4]")).getText());
     }
 
 
     private void sleep() {
         try {
-            Thread.sleep(1500L);
+            Thread.sleep(1000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
