@@ -57,15 +57,15 @@ public class ManufacturerEditTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Seleccionar producto zapatillas del menu")
-    void adidasSelectZapatillas() {
+    @DisplayName("Seleccionar producto del menu")
+    void adidasSelectProduct() {
 
         driver.get(editURL);
 
-        WebElement input = driver.findElement(By.xpath("//option[@value='13']"));
+        WebElement input = driver.findElement(By.cssSelector("#products > option:nth-child(4)"));
         input.click();
 
-        assertEquals(true, driver.findElement(By.xpath("//option[@value='13']")).isSelected());
+        assertEquals(true, driver.findElement(By.cssSelector("#products > option:nth-child(4)")).isSelected());
 
         WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
         button.submit();
@@ -106,7 +106,7 @@ public class ManufacturerEditTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Comprobar ")
+    @DisplayName("Comprobar manufacturer data edicion ")
     void editManufacturerAdidasData() {
         driver.get(editURL);
 
@@ -136,6 +136,7 @@ public class ManufacturerEditTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Comprobar direction data edicion")
     void editManufacturerAdidasDirection() {
         driver.get(editURL);
 
