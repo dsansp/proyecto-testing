@@ -12,7 +12,7 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@Disabled
 public class ManufacturerEditTest extends BaseTest {
 
 

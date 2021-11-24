@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
+@Disabled
 public class AddProductTest extends BaseTest{
 
     private static final String URL1 = "https://proyectogrupo1testing.herokuapp.com/products";
