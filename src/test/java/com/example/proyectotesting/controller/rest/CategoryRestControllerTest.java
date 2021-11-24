@@ -218,11 +218,11 @@ class CategoryRestControllerTest {
             assertTrue(response.hasBody());
             assertNotNull(response.getBody());
 
-            Category responseProduct = response.getBody();
+            Category responseCategory = response.getBody();
 
-            assertEquals(category.getId(), responseProduct.getId());
-            assertEquals("Category Modified", responseProduct.getName());
-            assertNotEquals(responseProduct.getName(), category.getName());
+            assertEquals(category.getId(), responseCategory.getId());
+            assertEquals("Category Modified", responseCategory.getName());
+            assertNotEquals(responseCategory.getName(), category.getName());
         }
 
         /**

@@ -1,10 +1,18 @@
 package com.example.proyectotesting.controller.rest;
 
+import com.example.proyectotesting.entities.Category;
 import com.example.proyectotesting.entities.Manufacturer;
+import com.example.proyectotesting.repository.CategoryRepository;
+import com.example.proyectotesting.repository.ManufacturerRepository;
+import com.example.proyectotesting.service.CategoryService;
+import com.example.proyectotesting.service.ManufacturerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -15,6 +23,7 @@ import org.springframework.http.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ManufacturerRestControllerTest {
@@ -28,10 +37,19 @@ class ManufacturerRestControllerTest {
     @LocalServerPort
     private int port;
 
+    @Mock//dependencia
+    private ManufacturerService manufacturerService;
+
+    @InjectMocks//dependiente del Mock
+    private ManufacturerRestController manufacturerRestController;
+
     @BeforeEach
     void setUp() {
         restTemplateBuilder = restTemplateBuilder.rootUri("http://localhost:" + port);
         testRestTemplate = new TestRestTemplate(restTemplateBuilder);
+
+        MockitoAnnotations.openMocks(this);
+        this.manufacturerRestController = new ManufacturerRestController(manufacturerService);
     }
 
 
@@ -135,10 +153,10 @@ class ManufacturerRestControllerTest {
         String json = String.format("""
                     {
                         "id": %d,
-                        "name": "Manufacturer update",
-                        "cif": "4765348f",
-                        "numEmployees": "34",
-                        "year": "300"
+                        "name": "Manufacturer nuevo",
+                        "cif": "cifnuevo",
+                        "numEmployees": 2,
+                        "year": 2000
                       
                     }
                     """, manufacturer.getId());
@@ -195,6 +213,42 @@ class ManufacturerRestControllerTest {
         manufacturers = List.of(response.getBody());
         assertEquals(0, manufacturers.size());
     }
+
+    @Test
+    void deleteAllNoContentTest(){
+        ResponseEntity<Manufacturer> response = testRestTemplate.exchange(MANUFACTURER_URL, HttpMethod.DELETE, createHttpRequest(null),Manufacturer.class);
+
+        assertEquals(204, response.getStatusCodeValue());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+
+    }
+
+
+    @Test
+    void noCoudntDeleteAllTest(){
+        ResponseEntity<Manufacturer> response = deleteAllmockTest();
+        assertEquals(409, response.getStatusCodeValue());
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+
+
+    }
+
+    private ResponseEntity<Manufacturer> deleteAllmockTest() {
+        ManufacturerRepository manufacturerRepository = mock(ManufacturerRepository.class);
+
+        doReturn(false).when(manufacturerService).deleteAll();
+        doThrow(RuntimeException.class).when(manufacturerService).deleteById(null);
+
+        return manufacturerRestController.deleteAll();
+
+    }
+
+
+
+
+
+
+
     @Test
     void deleteByIdSuccess() {
         Manufacturer manufacturer =createDemoManufacturer();
@@ -231,10 +285,38 @@ class ManufacturerRestControllerTest {
 
     }
 
+
+    @Test
+    void noCoudntDeleteIdTest(){
+        ResponseEntity<Manufacturer> response = deleteIdmockTest();
+
+        assertEquals(409, response.getStatusCodeValue());
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+
+
+    }
+
+    private ResponseEntity<Manufacturer> deleteIdmockTest() {
+        ManufacturerRepository manufacturerRepository = mock(ManufacturerRepository.class);
+
+        doReturn(true).when(manufacturerService).existsById(null);
+        doReturn(false).when(manufacturerService).deleteById(null);
+
+        doThrow(RuntimeException.class).when(manufacturerRepository).deleteById(null);
+
+        return manufacturerRestController.delete(null);
+
+    }
+
+
+
+
+
     private Manufacturer createDemoManufacturer(){
         String json = """
                 {
-                    "name": "Manufacturer de prueba",
+                    "name": "Manufacturer prueba",
                     "cif": "1234556789",
                     "num employess": 5,
                     "year": 2012
