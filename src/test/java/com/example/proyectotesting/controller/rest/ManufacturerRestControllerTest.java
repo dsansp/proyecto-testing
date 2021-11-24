@@ -214,6 +214,7 @@ class ManufacturerRestControllerTest {
         assertEquals(0, manufacturers.size());
     }
 
+    @Disabled
     @Test
     void deleteAllNoContentTest(){
         ResponseEntity<Manufacturer> response = testRestTemplate.exchange(MANUFACTURER_URL, HttpMethod.DELETE, createHttpRequest(null),Manufacturer.class);
