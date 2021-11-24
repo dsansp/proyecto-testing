@@ -2,7 +2,7 @@ name: CI Java maven
 on:
   push:
     branches:
-      - selenium
+      - master
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
