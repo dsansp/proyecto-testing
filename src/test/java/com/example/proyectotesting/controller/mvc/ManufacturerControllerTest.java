@@ -70,6 +70,18 @@ class ManufacturerControllerTest {
     }
 
 
+    @DisplayName("Comprobamos que no existe el manufacturer que pedimos para editar")
+    @Test
+    void loadFormNotFoundTest() throws Exception {
+        mvc.perform(get("/manufacturers/900/edit"))
+
+                .andExpect(model().attribute("NOTIFICATION","No existe el fabricante solicitado."))
+                //.andExpect(model().attributeExists("NOTIFICATION"))
+                .andExpect(model().attributeExists("manufacturers"))
+                .andExpect(forwardedUrl("/WEB-INF/views/manufacturer-list.jsp"));
+    }
+
+
 
     @DisplayName("Comprobando que se muestra el manufacturer en el formulario")
     @Test
