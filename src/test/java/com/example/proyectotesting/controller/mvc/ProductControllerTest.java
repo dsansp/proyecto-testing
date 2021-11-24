@@ -43,14 +43,19 @@ class ProductControllerTest {
     ProductRepository repository;
     @Nested
     class borrar {
+        @DisplayName("ProductControllerMVC-Borrar un producto en concreto")
         @Test
         void borrarProductoIdOk() throws Exception {
             Manufacturer manufacturer = new Manufacturer("Sampletester", "A0001", 150, 95);
             manufacturerRepository.save(manufacturer);
-            Product product = new Product("", "", 423, 2312D, manufacturer);
+            Product product = new Product("sample2", "sample", 3, 45.5, manufacturer);
+            product.setId(23L);
             repository.save(product);
             try {
-                mvc.perform(get("/products/9/delete"))
+                Product productDelete = new Product("sampleDelte", "sample", 3, 45.5, manufacturer);
+                repository.save(productDelete);
+                System.out.println(repository.findAll());
+                mvc.perform(get("/products/23/delete"))
                         .andExpect(status().is3xxRedirection())
                         .andExpect(redirectedUrl("/products"));
             } catch (Exception error) {
@@ -59,10 +64,15 @@ class ProductControllerTest {
                 assertTrue(false);
             }
         }
-
+@DisplayName("ProductControllerMVC-Borrar Todos los productos")
         @Test
         void borrarProductos() throws Exception {
-
+            Manufacturer manufacturer = new Manufacturer("Sampletester", "A0001", 150, 95);
+            manufacturerRepository.save(manufacturer);
+            Product product = new Product("sample3", "sample", 5, 45.5, manufacturer);
+            repository.save(product);
+            Product product2 = new Product("sample4", "sample", 95, 15.5, manufacturer);
+            repository.save(product2);
             mvc.perform(get("/products/delete/all"))
                     .andExpect(status().is3xxRedirection())
                     .andExpect(redirectedUrl("/products"));
@@ -70,7 +80,7 @@ class ProductControllerTest {
         }
     }
 
-
+@DisplayName("ProductControllerMVC-Obtener una lista")
     @Test
     void obtenerLista() throws Exception {
         mvc.perform(get("/products/"))
@@ -80,7 +90,7 @@ class ProductControllerTest {
                 .andExpect(forwardedUrl("/WEB-INF/views/product-list.jsp"));
 
     }
-
+ @DisplayName("ProductControllerMVC-Obtener un formulario")
     @Test
     void obtenerFormulario() throws Exception {
         mvc.perform(get("/products/new/"))
@@ -90,7 +100,7 @@ class ProductControllerTest {
                 .andExpect(model().attributeExists("categories"))
                 .andExpect(forwardedUrl("/WEB-INF/views/product-edit.jsp"));
     }
-
+@DisplayName("ProductControllerMVC-Crear un producto")
     @Test
     void crearProducto() throws Exception {
         mvc.perform(
@@ -104,27 +114,50 @@ class ProductControllerTest {
 
 
     }
+    @DisplayName("ProductControllerMVC-Editar un prooducto encontrado")
     @Test
     void editarProductoFound() throws Exception {
-        mvc.perform(get("/products/11/edit/"))
+        Manufacturer manufacturer = new Manufacturer("Sampletester", "A0001", 150, 95);
+        manufacturerRepository.save(manufacturer);
+        Product product = new Product("sample", "sample", 3, 45.5, manufacturer);
+        product.setId(20L);
+        repository.save(product);
+        System.out.println(repository.findAll());
+        mvc.perform(get("/products/20/edit/"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("product"))
                 .andExpect(MockMvcResultMatchers.view().name("product-edit"))
                 .andExpect(forwardedUrl("/WEB-INF/views/product-edit.jsp"));
     }
+    @DisplayName("ProductControllerMVC- Editar un producto no encontrado")
     @Test
     void editarNotPresentTest() throws Exception {
         mvc.perform(get("/products/1/edit"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/products"));
     }
+
+    /**
+     * generamos un producto de prueba y lo encontramos
+     * @throws Exception
+     */
+    @DisplayName("ProductControllerMVC- ver un producto, encontrándolo")
     @Test
     void verProductoFound() throws Exception {
-        mvc.perform(get("/products/9/view"))
+
+        Manufacturer manufacturer = new Manufacturer("Sampletester", "A0001", 150, 95);
+        manufacturerRepository.save(manufacturer);
+        Product product = new Product("sample3", "sample", 5, 45.5, manufacturer);
+        product.setId(18L);
+        repository.save(product);
+     ;
+        System.out.println(repository.findAll());
+        mvc.perform(get("/products/18/view"))
                 .andExpect(status().isOk())
 .andExpect( forwardedUrl("/WEB-INF/views/product-view.jsp"));
 
     }
+    @DisplayName("ProductControllerMVC- En caso de no encontrar un producto")
     @Test
     void verProductoNotFound() throws Exception {
         mvc.perform(get("/products/9999/view"))
@@ -134,10 +167,17 @@ class ProductControllerTest {
 
     }
 
-
+    /**
+     * Generamos un fabricante de prueba y comprobamos que lo encuentra
+     * @throws Exception
+     */
+    @DisplayName("ProductControllerMVC-Buscar formulario por fabricante")
     @Test
     void formWithManufacturer() throws Exception {
-        mvc.perform(get("/products/new/manufacturer/1"))
+        Manufacturer manufacturer = new Manufacturer("Sampletester", "A0001", 150, 95);
+        manufacturer.setId(14L);
+        manufacturerRepository.save(manufacturer);
+        mvc.perform(get("/products/new/manufacturer/14"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(model().attributeExists("manufacturer"))
                 .andExpect( forwardedUrl("/WEB-INF/views/product-edit-withmanufacturer.jsp"));
