@@ -16,9 +16,9 @@ import java.util.List;
 
 public class AddProductTest extends BaseTest{
 
-    private static final String URL1 = "http://localhost:8082/products";
-    private static final String URL2 = "http://localhost:8082/products/new";
-
+    private static final String URL1 = "https://proyectogrupo1testing.herokuapp.com/products";
+    private static final String URL2 = "https://proyectogrupo1testing.herokuapp.com/products/new";
+//"http://localhost:8082/products";  http://localhost:8082/products/new";
     @Test
     @DisplayName("Comprobar el título de la página")
     void testTitle(){
@@ -130,7 +130,7 @@ public class AddProductTest extends BaseTest{
         WebElement selector = driver.findElement(By.id("manufacturer"));
         Select selectFabricante = new Select(selector);
 
-        selectFabricante.selectByVisibleText("Adidas Shoes Inc");
+        selectFabricante.selectByVisibleText("Adidas");
         sleep();
 
         WebElement firstSelectedOption = selectFabricante.getFirstSelectedOption();

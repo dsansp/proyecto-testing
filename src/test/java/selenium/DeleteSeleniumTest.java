@@ -1,9 +1,11 @@
 package selenium;
 
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -12,29 +14,52 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DeleteSeleniumTest extends BaseTest {
 
 
-        private static final String URL = "http://localhost:8082/products";
-        private static final String AddURL = "http://localhost:8082/products/new";
-        private static final String ProductURL = "http://localhost:8082/products/9/view";
+        private static final String URL = "https://proyectogrupo1testing.herokuapp.com/products";
+        private static final String AddURL = "https://proyectogrupo1testing.herokuapp.com/products/new";
+        private static final String ProductURL = "https://proyectogrupo1testing.herokuapp.com/products/14/view";
 
-        //    private static final String URL = "http://localhost:8082/products";
+        //    private static final String URL = "http://localhost:8082/products"; "http://localhost:8082/products/new";"http://localhost:8082/products/9/view"
         // Navegador
     /**
      * Probamos de pulsar un botón borrar dentro de un producto concreto, y leugo comprobamos que no existe en
      * los productos listados
      */
+    @Disabled
     @Test
     void deleteButtonProduct(){
         driver.manage().window().maximize();
+        createDemoProduct();
         driver.get(ProductURL);
+
         WebElement h2 = driver.findElement(By.tagName("h2"));
         String h2Text = h2.getText();
-        assertEquals("Producto 9", h2Text);
+        assertEquals("Producto 14", h2Text);
         driver.findElement(By.cssSelector("a.btn:nth-child(10)")).click();
-        WebElement producto9= driver.findElement(By.xpath("/html/body/div/table/tbody/tr[2]/td[7]/a[3]"));
-        assertNotEquals("Mesa", producto9.getText());
+        WebElement producto14= driver.findElement(By.xpath("/html/body/div/table/tbody/tr[7]/td[7]/a[3]"));
+        assertNotEquals("producto de test", producto14.getText());
     }
 
-        /**
+    private void createDemoProduct() {
+        driver.manage().window().maximize();
+        driver.get(AddURL);
+        WebElement inputName = driver.findElement(By.xpath("//*[@id=\"name\"]"));
+        inputName.sendKeys("producto de test");
+        WebElement inputDescription = driver.findElement(By.cssSelector("#description"));
+        inputDescription.sendKeys("prueba");
+        WebElement inputPrecio = driver.findElement(By.id("price"));
+        inputPrecio.sendKeys("25");
+        WebElement inputCantidad = driver.findElement(By.xpath("//*[@id=\"quantity\"]"));
+        inputCantidad.sendKeys("1");
+        WebElement selector = driver.findElement(By.id("manufacturer"));
+        WebElement selectorcat = driver.findElement(By.id("categories"));
+        Select selectCategoria = new Select(selectorcat);
+
+        selectCategoria.selectByVisibleText("Libros");
+        WebElement button = driver.findElement(By.xpath("//*[@id=\"product\"]/div[7]/button"));
+        button.submit();
+    }
+
+    /**
          * Probamos de pulsar el botón borrar productos, estando ya vacio el
          * campo de productos
          */
@@ -85,18 +110,7 @@ public class DeleteSeleniumTest extends BaseTest {
         }
 
 
-//    void createDemoProduct() {
-//        driver.get(AddURL);
-//        WebElement h2 = driver.findElement(By.tagName("h2"));
-//        String hText = h2.getText();
-//        assertEquals("Product", hText);
-//        driver.findElement(By.id("name")).sendKeys("Producto de prueba");
-//        driver.findElement(By.id("description")).sendKeys("Descripción de prueba");
-//        driver.findElement(By.id("price")).sendKeys("99,99");
-//        driver.findElement(By.id("quantity")).sendKeys("10");
-//        driver.findElement(By.cssSelector("#categories > option:nth-child(1)"));
-//        driver.findElement(By.xpath("/html/body/div/div/div/form/div[7]/button")).click();
-//    }
+
         /**
          * Probamos de pulsar un botón borrar de un producto concreto, existiendo en
          * los productos listados

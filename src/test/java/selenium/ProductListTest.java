@@ -14,17 +14,18 @@ public class ProductListTest extends BaseTest {
 
 
     //private static final String URL = "https://proyectogrupo1testing.herokuapp.com/products";
-    private static final String URL0 = "http://localhost:8082/products/new";
-    private static final String URL1 = "http://localhost:8082/products";
-    private static final String URL2 = "http://localhost:8082/products/9/view";
-
+    private static final String URL0 = "https://proyectogrupo1testing.herokuapp.com/products/new";
+    private static final String URL1 = "https://proyectogrupo1testing.herokuapp.com/products";
+    private static final String URL2 = "https://proyectogrupo1testing.herokuapp.com/products/9/view";
+//http://localhost:8082/products/new"; "http://localhost:8082/products";http://localhost:8082/products/9/view";
+   @Disabled
     @DisplayName("Comprobamos que se carga correctamente la pagina web")
     @Test
     void cargarPaginaTest(){
         driver.get(URL1);
         WebElement buttonVer = driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[2]/td[7]/a[1]"));
         buttonVer.click();
-        assertEquals("Producto 9", driver.findElement(By.tagName("h2")).getText());
+        assertEquals("Producto 15", driver.findElement(By.tagName("h2")).getText());
 
     }
 

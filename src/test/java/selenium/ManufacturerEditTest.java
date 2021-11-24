@@ -1,5 +1,6 @@
 package selenium;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -15,10 +16,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ManufacturerEditTest extends BaseTest {
 
 
-    private static final String manufacturersURL = "http://localhost:8082/manufacturers";
-    private static final String editURL = "http://localhost:8082/manufacturers/1/edit";
+    private static final String manufacturersURL = "https://proyectogrupo1testing.herokuapp.com/manufacturers";
+    private static final String editURL = "https://proyectogrupo1testing.herokuapp.com/products/14/edit";
+    private static final String newURL = "https://proyectogrupo1testing.herokuapp.com/manufacturers/new";
+    private static final String viewURL = "https://proyectogrupo1testing.herokuapp.com/manufacturers/14/view";
+   // http://localhost:8082/manufacturers http://localhost:8082/manufacturers/1/edit
 
-    JavascriptExecutor js;
+
+    private void newFabricante() {
+        driver.get((newURL));
+        driver.findElement(By.cssSelector("#name")).sendKeys("Test");
+        driver.findElement(By.cssSelector("#cif")).sendKeys("2347675443");
+        driver.findElement(By.cssSelector("#numEmployees")).sendKeys("66666");
+        driver.findElement(By.cssSelector("#year")).sendKeys("2000");
+        driver.findElement(By.cssSelector("#direction\\.street")).sendKeys("castellana 69");
+        driver.findElement(By.cssSelector("#direction\\.postalCode")).sendKeys("13326");
+        driver.findElement(By.cssSelector("#direction\\.city")).sendKeys("Montiel");
+        driver.findElement(By.cssSelector("#direction\\.country")).sendKeys("Filipinas");
+//seleccionar producto
+        WebElement input = driver.findElement(By.xpath("/html/body/div/div/div/form/div[9]/select/option"));
+        js.executeScript("arguments[0].scrollIntoView();", input);
+        input.click();
+
+//guardar #products
+        WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
+        button.submit();
+
+    }
 
     /**
      * Acceder desde la lista de fabricantes pulsando Editar
@@ -34,18 +58,22 @@ public class ManufacturerEditTest extends BaseTest {
     /**
      * Acceder a edit fabricante pulsando Editar
      */
+    @Disabled
     @Test
     @DisplayName("Titulo del fabricante")
-    void CheckTitleAdidasTextTest() {
-
+    void CheckTitleTestTextTest() {
+    newFabricante();
+        System.out.println("creado fabricante de prueba");
         driver.get(editURL);
 
-        assertEquals("Fabricante 1", driver.
+        assertEquals("Fabricante 14", driver.
                 findElement(By.cssSelector("h2")).getText());
         assertEquals("Manufacturer Edition | Aswesome App", driver.getTitle());
 
     }
 
+
+@Disabled
     @Test
     @DisplayName("Click boton guardar/salir ")
     void buttonSaveAndExit() {
@@ -55,7 +83,7 @@ public class ManufacturerEditTest extends BaseTest {
 
         assertEquals("Manufacturer List | Awesome App", driver.getTitle());
     }
-
+@Disabled
     @Test
     @DisplayName("Seleccionar producto del menu")
     void adidasSelectProduct() {
@@ -72,6 +100,7 @@ public class ManufacturerEditTest extends BaseTest {
 
         //status = "passsed";
     }
+    @Disabled
     @Test
     @DisplayName("Seleccionar todos productos del menu")
     void adidasSelectAll() {
@@ -90,7 +119,7 @@ public class ManufacturerEditTest extends BaseTest {
         WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
         button.submit();
     }
-
+@Disabled
     @Test
     @DisplayName("comprobar los titulos de el manufacturer")
     void AdidasDataTitles() {
@@ -104,14 +133,14 @@ public class ManufacturerEditTest extends BaseTest {
         WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
         button.submit();
     }
-
+@Disabled
     @Test
     @DisplayName("Comprobar manufacturer data edicion ")
     void editManufacturerAdidasData() {
         driver.get(editURL);
 
         driver.findElement(By.cssSelector("#name")).clear();
-        driver.findElement(By.cssSelector("#name")).sendKeys("Adidas Shoes Inc");
+        driver.findElement(By.cssSelector("#name")).sendKeys("Test");
         driver.findElement(By.cssSelector("#cif")).clear();
         driver.findElement(By.cssSelector("#cif")).sendKeys("2347675443");
         driver.findElement(By.cssSelector("#numEmployees")).clear();
@@ -134,7 +163,7 @@ public class ManufacturerEditTest extends BaseTest {
 
 
     }
-
+@Disabled
     @Test
     @DisplayName("Comprobar direction data edicion")
     void editManufacturerAdidasDirection() {
