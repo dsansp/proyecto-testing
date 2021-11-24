@@ -352,6 +352,7 @@ class CategoryRestControllerTest {
 
         }
 
+        @Disabled
         @DisplayName("Comprobamos que no se borra las  categorias")
         @Test
         void deleteAllTest(){
