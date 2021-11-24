@@ -119,11 +119,11 @@ class ProductControllerTest {
     void editarProductoFound() throws Exception {
         Manufacturer manufacturer = new Manufacturer("Sampletester", "A0001", 150, 95);
         manufacturerRepository.save(manufacturer);
-        Product product = new Product("sample", "sample", 3, 45.5, manufacturer);
-        product.setId(20L);
+        Product product = new Product("Editsample", "sample", 3, 45.5, manufacturer);
+        product.setId(21L);
         repository.save(product);
         System.out.println(repository.findAll());
-        mvc.perform(get("/products/20/edit/"))
+        mvc.perform(get("/products/21/edit/"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("product"))
                 .andExpect(MockMvcResultMatchers.view().name("product-edit"))
