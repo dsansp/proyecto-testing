@@ -357,8 +357,8 @@ class CategoryRestControllerTest {
         void deleteAllTest(){
             ResponseEntity<Category> response = testRestTemplate.exchange(Category_URL, HttpMethod.DELETE, createHttpRequest(null),Category.class);
 
-            assertEquals(409, response.getStatusCodeValue());
-            assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+            assertEquals(204, response.getStatusCodeValue());
+            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
         }
 
