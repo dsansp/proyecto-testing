@@ -22,9 +22,7 @@ public class ProductListTest extends BaseTest {
     @Test
     void cargarPaginaTest(){
         driver.get(URL1);
-        WebElement buttonVer = driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr[2]/td[7]/a[1]"));
-        buttonVer.click();
-        assertEquals("Producto 9", driver.findElement(By.tagName("h2")).getText());
+        assertEquals("Products Directory", driver.findElement(By.tagName("h1")).getText());
 
     }
 

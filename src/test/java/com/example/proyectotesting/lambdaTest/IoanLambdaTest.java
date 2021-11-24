@@ -1,71 +1,86 @@
 package com.example.proyectotesting.lambdaTest;
 
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class IoanLambdaTest {
-    String username = System.getenv("LT_USERNAME") == null ? "Your LT Username" : System.getenv("LT_USERNAME");
-    String accessKey = System.getenv("LT_ACCESS_KEY") == null ? "Your LT AccessKey" : System.getenv("LT_ACCESS_KEY");
-    public static RemoteWebDriver driver = null;
-    public String gridURL = "@hub.lambdatest.com/wd/hub";
-    public String status = "failed";
+public class IoanLambdaTest extends BaseTestLambda {
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-//        capabilities.setCapability("browserName", "chrome");
-//        capabilities.setCapability("version", "latest");
-//        capabilities.setCapability("platform", "Windows 10"); // If this cap isn't specified, it will just get the any available one
 
-        capabilities.setCapability("platform", "Windows 10");
-        capabilities.setCapability("browserName", "Chrome");
-        capabilities.setCapability("version","95.0");
-        capabilities.setCapability("resolution","1920x1080");
-        capabilities.setCapability("console","error");
-        capabilities.setCapability("visual",true);
-
-        capabilities.setCapability("build", "ProjectTesting1");
-        capabilities.setCapability("name", "ProjectTesting");
-        capabilities.setCapability("network", true); // To enable network logs
-        capabilities.setCapability("visual", true); // To enable step by step screenshot
-        capabilities.setCapability("video", true); // To enable video recording
-        capabilities.setCapability("console", true); // To capture console logs
-        try {
-            driver = new RemoteWebDriver(new URL("https://" + username + ":" + accessKey + gridURL), capabilities);
-        } catch (MalformedURLException e) {
-            System.out.println("Invalid grid URL");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @AfterEach
-    public void tearDown() throws Exception {
-        if (driver != null) {
-            driver.executeScript("lambda-status=" + status);
-            driver.quit();
-        }
-    }
-
-@Disabled
     @Test
     public void testSimple() throws Exception {
 
-        driver.get("http://localhost:8082/products");
+        driver.get("https://proyectogrupo1testing.herokuapp.com/products");
         assertEquals("Products Directory", driver.findElement(By.tagName("h1")).getText());
         status = "passed";
 
     }
+
+    //private static final String URL1 = "http://localhost:8082/products";
+    private static  final String URL1 = "https://proyectogrupo1testing.herokuapp.com/products";
+    private static final String URL2 = "http://localhost:8082/products/9/view";
+
+    @DisplayName("Creando un producto para luego poder comprobar que se ve")
+    @Test
+    void buttonVerProductTest(){
+
+
+
+        driver.get(URL1);
+        driver.getCurrentUrl();
+
+        driver.findElement(By.xpath("//div/p[2]/a[1]")).click();
+//        driver.get(URL2);
+//
+//        driver.getCurrentUrl();
+//
+//        //Creando el producto de PS3
+//        driver.findElement(By.xpath("//div[@class='form-group']//input[@id='name']")).clear();
+//        driver.findElement(By.xpath("//div[@class='form-group']//input[@id='name']")).sendKeys("PS3");
+//        driver.findElement(By.xpath("//div[@class='form-group']//textarea")).clear();
+//        driver.findElement(By.xpath("//div[@class='form-group']//textarea")).sendKeys("PS3 la mejor consola del año");
+//        driver.findElement(By.xpath("//div[@class='form-group']//input[@id='price']")).clear();
+//        driver.findElement(By.xpath("//div[@class='form-group']//input[@id='price']")).sendKeys("260");
+//        driver.findElement(By.xpath("//div[@class='form-group']//input[@id='quantity']")).clear();
+//        driver.findElement(By.xpath("//div[@class='form-group']//input[@id='quantity']")).sendKeys("1");
+//
+//
+//        WebElement button = driver.findElement(By.xpath("//*[@id=\"product\"]/div[7]/button"));
+//        button.submit();
+//
+//        List<WebElement> productos = driver.findElements(By.tagName("tr"));
+//        int numero = productos.size();
+//
+//        //Comprobaciones
+//        String title = driver.getTitle();
+//        assertEquals("Product List | Awesome App",title);
+//
+//
+//        driver.findElement(By.xpath("//*[@id=\"products-list\"]/tbody/tr["+ numero +"]/td[7]/a[1]")).click();
+//        String titleProduct = driver.getTitle();
+//
+//        assertEquals("Nombre: PS3", driver.findElement(By.xpath("//div/p[1]")).getText());
+//        assertEquals("Descripción: PS3 la mejor consola del año", driver.findElement(By.xpath("//div/p[2]")).getText());
+//
+//        driver.findElement(By.xpath("//div/a[1]")).click();
+//
+//        assertEquals("Products Directory", driver.findElement(By.tagName("h1")).getText());
+
+    }
+
+
+
+
+
+
 }
