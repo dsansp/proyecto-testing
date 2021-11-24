@@ -40,6 +40,7 @@ public class IoanLambdaTest extends BaseTestLambda {
         driver.getCurrentUrl();
 
         driver.findElement(By.xpath("//div/p[2]/a[1]")).click();
+        status = "passed";
 //        driver.get(URL2);
 //
 //        driver.getCurrentUrl();

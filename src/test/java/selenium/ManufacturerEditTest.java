@@ -1,5 +1,6 @@
 package selenium;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -11,7 +12,7 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@Disabled
 public class ManufacturerEditTest extends BaseTest {
 
 
