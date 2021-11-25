@@ -30,7 +30,7 @@ public class BaseTestLambda {
 //        capabilities.setCapability("browserName", "Chrome");
 //        capabilities.setCapability("version","95.0");
 
-        capabilities.setCapability("platform", "Windows 10");
+        capabilities.setCapability("platform", "Windows 8");
         capabilities.setCapability("browserName", "Chrome");
         capabilities.setCapability("version","95.0");
         capabilities.setCapability("resolution","1920x1080");
