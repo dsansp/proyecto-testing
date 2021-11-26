@@ -181,20 +181,24 @@ class ManufacturerServiceImplTest {
     @Test
     void deleteByIdExceptionTest() {
 
-        List<Manufacturer> manufacturers = new ArrayList<>();
+//        List<Manufacturer> manufacturers = new ArrayList<>();
+//
+//        Manufacturer manufacturer1 = new Manufacturer("name1", "12345", 4, 2007);
+//        manufacturer1.setId(null);
+//        manufacturers.add(manufacturer1);
 
-        Manufacturer manufacturer1 = new Manufacturer("name1", "12345", 4, 2007);
-        manufacturer1.setId(1L);
-        manufacturers.add(manufacturer1);
-
-         doThrow(RuntimeException.class).when(manufacturerRepository).deleteById(1L);
-
-            boolean result = manufacturerService.deleteById(1L);
-            assertThrows(Exception.class, () -> manufacturerRepository.deleteById(1L));
-
-
-            verify(manufacturerRepository, times(1)).deleteById(1L);
-            assertFalse(result);
+//         doThrow(RuntimeException.class).when(manufacturerRepository).deleteById(80L);
+//
+//            boolean result = manufacturerService.deleteById(80L);
+//            assertThrows(Exception.class, () -> manufacturerRepository.deleteById(80L));
+//
+//
+//            verify(manufacturerRepository, times(1)).deleteById(80L);
+//            assertFalse(result);
+        doThrow(new RuntimeException()).when(manufacturerRepository).deleteById(1L);
+        when(manufacturerRepository.existsById(1L)).thenReturn(true);
+        assertFalse(manufacturerService.deleteById(1L));
+        verify(manufacturerRepository).existsById(1L);
 
 
     }
