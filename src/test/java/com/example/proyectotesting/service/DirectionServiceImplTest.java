@@ -82,6 +82,17 @@ class DirectionServiceImplTest {
             assertEquals(Optional.empty(), direction);
         }
 
+        @Test
+        void findOneExceptionsTest() {
+
+            doThrow(IllegalArgumentException.class).when(directionRepository).findById(30L);
+
+            Optional<Direction>resultopt = directionService.findOne(30L);
+            assertThrows(IllegalArgumentException.class, () -> directionRepository.findById(30L));
+
+            assertNotNull(resultopt);
+        }
+
     }
 
     @DisplayName("Comprobar que existe una dirección")
