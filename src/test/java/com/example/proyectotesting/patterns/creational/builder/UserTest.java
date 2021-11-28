@@ -84,11 +84,11 @@ class UserTest {
     @DisplayName("Comprobar la clase static Builder")
     @Nested
     class bldTest {
-        @Disabled
+        //@Disabled
         @Test
         void BuilderTest() {
 
-            assertEquals(3L, usuario.getId());
+            assertEquals(1L, usuario.getId());
         }
 
         @Test

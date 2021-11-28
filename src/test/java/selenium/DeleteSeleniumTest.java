@@ -25,23 +25,25 @@ public class DeleteSeleniumTest extends BaseTest {
      * Probamos de pulsar un botón borrar dentro de un producto concreto, y leugo comprobamos que no existe en
      * los productos listados
      */
-    @Disabled
+
+
     @Test
     void deleteButtonProduct(){
-        driver.manage().window().maximize();
+        //driver.manage().window().maximize();
         createDemoProduct();
         driver.get(ProductURL);
 
         WebElement h2 = driver.findElement(By.tagName("h2"));
         String h2Text = h2.getText();
         assertEquals("Producto 14", h2Text);
+       //assertEquals("Producto 14", driver.findElement(By.tagName("h2")).getText());
         driver.findElement(By.cssSelector("a.btn:nth-child(10)")).click();
         WebElement producto14= driver.findElement(By.xpath("/html/body/div/table/tbody/tr[7]/td[7]/a[3]"));
         assertNotEquals("producto de test", producto14.getText());
     }
 
     private void createDemoProduct() {
-        driver.manage().window().maximize();
+        //driver.manage().window().maximize();
         driver.get(AddURL);
         WebElement inputName = driver.findElement(By.xpath("//*[@id=\"name\"]"));
         inputName.sendKeys("producto de test");

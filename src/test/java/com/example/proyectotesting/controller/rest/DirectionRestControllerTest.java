@@ -168,15 +168,17 @@ class DirectionRestControllerTest {
         @Test
         void updateNullTest() {
             Direction direction = createDataDirections();
-            String json = """
+            String json = String.format("""
+                    
                 {
-                    "id": null
+                    "id": null,
                     "street": "Calle actualizada con éxito",
                     "postalCode": "350112",
                     "city": "Las Palmas de Gran Canaria",
                     "country": "España"
                 }
-                """;
+                """,direction.getId());
+
             //Ejecutar petición HTTP
             ResponseEntity<Direction> respuesta = testRestTemplate.exchange(Direction_URL, HttpMethod.PUT, createHttpRequest(json), Direction.class);
             assertEquals(400, respuesta.getStatusCodeValue());

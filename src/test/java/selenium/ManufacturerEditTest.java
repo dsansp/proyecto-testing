@@ -24,7 +24,7 @@ public class ManufacturerEditTest extends BaseTest {
 
 
     private void newFabricante() {
-        driver.get((newURL));
+        driver.get(newURL);
         driver.findElement(By.cssSelector("#name")).sendKeys("Test");
         driver.findElement(By.cssSelector("#cif")).sendKeys("2347675443");
         driver.findElement(By.cssSelector("#numEmployees")).sendKeys("66666");
@@ -35,7 +35,9 @@ public class ManufacturerEditTest extends BaseTest {
         driver.findElement(By.cssSelector("#direction\\.country")).sendKeys("Filipinas");
 //seleccionar producto
         WebElement input = driver.findElement(By.xpath("/html/body/div/div/div/form/div[9]/select/option"));
+       // js.executeScript("arguments[0].scrollIntoView();", input);
         js.executeScript("arguments[0].scrollIntoView();", input);
+
         input.click();
 
 //guardar #products
@@ -58,7 +60,7 @@ public class ManufacturerEditTest extends BaseTest {
     /**
      * Acceder a edit fabricante pulsando Editar
      */
-    @Disabled
+
     @Test
     @DisplayName("Titulo del fabricante")
     void CheckTitleTestTextTest() {
@@ -73,7 +75,7 @@ public class ManufacturerEditTest extends BaseTest {
     }
 
 
-@Disabled
+
     @Test
     @DisplayName("Click boton guardar/salir ")
     void buttonSaveAndExit() {
@@ -83,7 +85,7 @@ public class ManufacturerEditTest extends BaseTest {
 
         assertEquals("Manufacturer List | Awesome App", driver.getTitle());
     }
-@Disabled
+
     @Test
     @DisplayName("Seleccionar producto del menu")
     void adidasSelectProduct() {
@@ -100,7 +102,7 @@ public class ManufacturerEditTest extends BaseTest {
 
         //status = "passsed";
     }
-    @Disabled
+
     @Test
     @DisplayName("Seleccionar todos productos del menu")
     void adidasSelectAll() {
@@ -119,7 +121,7 @@ public class ManufacturerEditTest extends BaseTest {
         WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
         button.submit();
     }
-@Disabled
+
     @Test
     @DisplayName("comprobar los titulos de el manufacturer")
     void AdidasDataTitles() {
@@ -133,7 +135,7 @@ public class ManufacturerEditTest extends BaseTest {
         WebElement button = driver.findElement(By.xpath("//button[@type='submit']"));
         button.submit();
     }
-@Disabled
+
     @Test
     @DisplayName("Comprobar manufacturer data edicion ")
     void editManufacturerAdidasData() {
@@ -163,7 +165,7 @@ public class ManufacturerEditTest extends BaseTest {
 
 
     }
-@Disabled
+
     @Test
     @DisplayName("Comprobar direction data edicion")
     void editManufacturerAdidasDirection() {

@@ -1,4 +1,4 @@
-package com.example.proyectotesting.lambdaTest;
+package com.example.lambdaTest;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

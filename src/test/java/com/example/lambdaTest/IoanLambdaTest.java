@@ -1,15 +1,10 @@
-package com.example.proyectotesting.lambdaTest;
+package com.example.lambdaTest;
 
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

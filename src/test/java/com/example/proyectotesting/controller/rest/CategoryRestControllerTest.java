@@ -1,6 +1,7 @@
 package com.example.proyectotesting.controller.rest;
 
 import com.example.proyectotesting.entities.Category;
+import com.example.proyectotesting.entities.Product;
 import com.example.proyectotesting.repository.CategoryRepository;
 import com.example.proyectotesting.service.CategoryService;
 import org.junit.jupiter.api.*;
@@ -256,7 +257,7 @@ class CategoryRestControllerTest {
         @DisplayName("comprobar si al hacer update no encuentra la id que le hemos indicado")
         @Test
         void updateDontFoundIdTest() {
-            Category product = createDataCategories();
+            Category category = createDataCategories();
             String json = String.format("""
                     {
                         "id": 80,
@@ -264,7 +265,7 @@ class CategoryRestControllerTest {
                         "color": "color example"
                        
                     }
-                    """, product.getId());
+                    """, category.getId());
             System.out.println(json);
             ResponseEntity<Category> response =
                     testRestTemplate.exchange(Category_URL, HttpMethod.PUT, createHttpRequest(json), Category.class);
@@ -352,19 +353,6 @@ class CategoryRestControllerTest {
 
         }
 
-        @Disabled
-        @DisplayName("Comprobamos que no se borra las  categorias")
-        @Test
-        void deleteAllTest(){
-            ResponseEntity<Category> response = testRestTemplate.exchange(Category_URL, HttpMethod.DELETE, createHttpRequest(null),Category.class);
-
-            assertEquals(204, response.getStatusCodeValue());
-            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-
-        }
-
-
-
 
         /**
          * Método que lanzará una excepcion 409 en el metodo de deleteAll()
@@ -379,10 +367,34 @@ class CategoryRestControllerTest {
 
         }
 
+
+
         private ResponseEntity<Category> deleteAllmockTest() {
             CategoryRepository categoryRepository = mock(CategoryRepository.class);
 
             doReturn(false).when(categoryService).deleteAll();
+            doThrow(RuntimeException.class).when(categoryRepository).deleteById(null);
+
+            return categoryRestController.deleteAll();
+
+        }
+
+        /**
+         * Método que lanzará una excepcion 204 en el metodo de deleteAll()
+         * devuelve como respuesta un NO_CONTENT que es el numero 204
+         */
+
+        @Test
+        void noCoudntDeleteAllNoContentTest(){
+            ResponseEntity<Category> response = deleteAllmockTwoTest();
+            assertEquals(204, response.getStatusCodeValue());
+            assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        }
+
+        private ResponseEntity<Category> deleteAllmockTwoTest() {
+            CategoryRepository categoryRepository = mock(CategoryRepository.class);
+
+            doReturn(true).when(categoryService).deleteAll();
             doThrow(RuntimeException.class).when(categoryRepository).deleteById(null);
 
             return categoryRestController.deleteAll();
