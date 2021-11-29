@@ -1,6 +1,9 @@
 package com.example.proyectotesting.service;
 
+import com.example.proyectotesting.entities.Category;
 import com.example.proyectotesting.entities.Direction;
+import com.example.proyectotesting.entities.Manufacturer;
+import com.example.proyectotesting.entities.Product;
 import com.example.proyectotesting.repository.DirectionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +28,27 @@ class DirectionServiceImplTest {
         directionRepository = mock(DirectionRepository.class);
         this.directionService = new DirectionServiceImpl(directionRepository);
     }
+
+    @Test
+    void DirectionClassTest(){
+        Direction direction = new Direction();
+
+        Manufacturer made = new Manufacturer();
+
+        direction.setManufacturer(made);
+
+        assertEquals(made,direction.getManufacturer());
+        assertNotNull(direction);
+
+        direction.toString();
+
+
+
+    }
+
+
+
+
 
     @DisplayName("Comprobar que se encuentran todas las direcciones")
     @Nested
