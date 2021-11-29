@@ -147,60 +147,6 @@ class ManufacturerRestControllerTest {
     }
 
 
-
-//Aviso este update no funciona!!
-
-//    @Test
-//
-//    void update() {
-////        Manufacturer manufacturer = createDemoManufacturer();
-////        String json = String.format("""
-////                    {
-////                        "id": %d,
-////                        "name": "Manufacturer nuevo",
-////                        "cif": "cifnuevo",
-////                        "numEmployees": 2,
-////                        "year": 2000
-////
-////                    }
-////                    """, manufacturer.getId());
-////        System.out.println(json);
-////        ResponseEntity<Manufacturer> response =
-////                testRestTemplate.exchange(MANUFACTURER_URL, HttpMethod.PUT, createHttpRequest(json), Manufacturer.class);
-////
-////        assertEquals(200, response.getStatusCodeValue());
-////        assertEquals(HttpStatus.OK, response.getStatusCode());
-////        assertTrue(response.hasBody());
-////        assertNotNull(response.getBody());
-////
-////        Manufacturer responseManufacturer = response.getBody();
-////
-////        assertEquals(manufacturer.getId(), responseManufacturer.getId());
-////        assertEquals("Manufacturer update", responseManufacturer.getName());
-////        assertNotEquals(responseManufacturer.getName(), manufacturer.getName());
-//        Manufacturer manufacturer = createDemoManufacturer();
-//        String json = String.format("""
-//                    {
-//                        "id": %d,
-//                        "name": "Manufacturer new",
-//                        "cif": "3455672G",
-//                        "numEmployees": 56,
-//                        "year": 2007
-//                    }
-//                    """, manufacturer.getId());
-//        System.out.println(json);
-//        ResponseEntity<Manufacturer> response =
-//                testRestTemplate.exchange(MANUFACTURER_URL, HttpMethod.PUT, createHttpRequest(json), Manufacturer.class);
-//        assertEquals(200, response.getStatusCodeValue());
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertTrue(response.hasBody());
-//        assertNotNull(response.getBody());
-//        Manufacturer responseManufacturer = response.getBody();
-//        assertEquals(manufacturer.getId(), responseManufacturer.getId());
-//        assertEquals("Manufacturer new", responseManufacturer.getName());
-//        assertNotEquals(responseManufacturer.getName(), manufacturer.getName());
-//    }
-
     @Test
     void updateBadRequest() {
         Manufacturer manufacturer = createDemoManufacturer();
