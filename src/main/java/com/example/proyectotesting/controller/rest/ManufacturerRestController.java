@@ -43,11 +43,15 @@ public class ManufacturerRestController {
 
     @PutMapping("/api/manufacturers")
     public ResponseEntity<Manufacturer> update(@RequestBody Manufacturer manufacturer){
-        if(manufacturer.getId() != null)
+        if(manufacturer.getId() == null)
             return ResponseEntity.badRequest().build();
+        else{
+            Manufacturer result = manufacturerService.save(manufacturer);
+            return ResponseEntity.ok(result);
+        }
 
-        Manufacturer result = manufacturerService.save(manufacturer);
-        return ResponseEntity.ok(result);
+
+
     }
 
 

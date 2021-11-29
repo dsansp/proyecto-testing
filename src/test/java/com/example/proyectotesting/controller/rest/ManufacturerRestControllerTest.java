@@ -206,7 +206,7 @@ class ManufacturerRestControllerTest {
         Manufacturer manufacturer = createDemoManufacturer();
         String json = String.format("""
                 {
-                    "id": 50,
+                    "id": null,
                     "name": "Manufacturer EDITADO",
                     "cif": "2344635325G",
                     "numEmployees": 8,
@@ -227,7 +227,7 @@ class ManufacturerRestControllerTest {
         Manufacturer manufacturer = createDemoManufacturer();
         String json = String.format("""
                     {
-                     "id": null,
+                     "id": %d,
                      "name": "Manufacturer EDITADO",
                      "cif": "2344635325G",
                      "numEmployees": 8,
