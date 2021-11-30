@@ -45,9 +45,9 @@ public class TelegramTest {
         Telegram telegram=new Telegram();
 
         AbstractUser user1 = new User(telegram, "ismael");
-        int list = telegram.users.size();
-        telegram.addUser(user1);
+        //int list = telegram.users.size();
         telegram.removeUser(user1);
-        assertTrue(list == telegram.users.size());
+        //assertTrue(list == telegram.users.size());
+        assertEquals(0, telegram.users.size());
     }
 }
